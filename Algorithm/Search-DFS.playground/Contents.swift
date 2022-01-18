@@ -1,21 +1,31 @@
-import UIKit
-public class TreeNode {
-    public var val: Int
-    public var left: TreeNode?
-    public var right: TreeNode?
-    public init() { self.val = 0; self.left = nil; self.right = nil; }
-    public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
-    public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
-        self.val = val
-        self.left = left
-        self.right = right
-    }
-}
-
-//549. Binary Tree Longest Consecutive Sequence II
-//Input: root = [1,2,3]
+//547. Number of Provinces
+//Input: isConnected = [[1,1,0],[1,1,0],[0,0,1]]
 //Output: 2
-//Explanation: The longest consecutive path is [1, 2] or [2, 1].
+
+import Darwin
+func findCircleNum(_ isConnected: [[Int]]) -> Int {
+    if isConnected.count == 0 { return 0 }
+    
+    var isConnected = isConnected
+    var circleNo = 0
+    var visited:[Bool] = Array(repeating: false, count: isConnected.count)
+    for n in 0..<isConnected.count {
+        if visited[n] == false {
+            dfs(isConnected: &isConnected, provinceNo: n)
+            circleNo += 1
+        }
+    }
+    
+    func dfs(isConnected: inout [[Int]], provinceNo:Int) {
+        for m in 0..<isConnected[provinceNo].count {
+            if isConnected[provinceNo][m] == 1 && visited[m] == false {
+                visited[m] = true
+                dfs(isConnected: &isConnected, provinceNo:m)
+            }
+        }
+    }
+    return circleNo
+}
 
 
 
