@@ -4,18 +4,40 @@ import Darwin
 //Output: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
 func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     if heights.count == 0 { return []}
-    
+
     let directions:[[Int]] = [[0,1],[0,-1],[1,0],[-1,0]]
+    var pacific:[[Bool]] = Array(repeating: Array(repeating: false, count: heights[0].count), count: heights.count)
+    var atlantic:[[Bool]] = Array(repeating: Array(repeating: false, count: heights[0].count), count: heights.count)
     for m in 0..<heights.count {
-        dfs(heights: &heights, row: <#T##Int#>, column: 0)
+        dfs(height: heights[m][0], row: m, column: 0, isVisited: &pacific)
+        dfs(height: heights[m][heights[0].count-1], row: m, column: heights[0].count-1, isVisited: &atlantic)
     }
     
-    
-    
-    
-    func dfs(heights:inout [[Int]], row:Int, column:Int) {
-        
+    for n in 0..<heights[0].count {
+        dfs(height: heights[0][n], row: 0, column: n, isVisited: &pacific)
+        dfs(height: heights[heights.count-1][n], row: heights.count-1, column: n, isVisited: &atlantic)
     }
+    
+    var result = [[Int]]()
+    for m in 0..<heights.count {
+        for n in 0..<heights[0].count {
+            if pacific[m][n] == true && atlantic[m][n] == true {
+                let arr = [m,n]
+                result.append(arr)
+            }
+        }
+    }
+
+    func dfs(height:Int, row:Int, column:Int, isVisited: inout [[Bool]]) {
+        if row < 0 || row >= heights.count || column < 0 || column >= heights[0].count || isVisited[row][column] || heights[row][column] < height { return }
+
+        isVisited[row][column] = true
+        for dir in directions {
+            dfs(height: heights[row][column], row: row+dir[0], column: column+dir[1], isVisited: &isVisited)
+        }
+    }
+    
+    return result
 }
 
 
