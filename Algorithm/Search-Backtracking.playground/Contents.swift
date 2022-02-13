@@ -12,39 +12,98 @@ public class TreeNode {
         self.right = right
     }
 }
+//39. Combination Sum
+//Input: candidates = [2,3,6,7], target = 7
+//Output: [[2,2,3],[7]]
+func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    
+    return [[]]
+}
+
+//77. Combinations
+//Input: n = 4, k = 2
+//Output:[[2,4],[3,4],[2,3],[1,2],[1,3],[1,4],]
+func combine(_ n: Int, _ k: Int) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    backtracking(n:n, k:k, pos: 1, current: &current, result: &result)
+    
+    func backtracking(n:Int, k:Int, pos:Int, current:inout [Int], result:inout [[Int]]) {
+        if current.count == k {
+            result.append(current)
+            return
+        }
+        
+        for i in pos...n {
+            if current.contains(i) {continue}
+            current.append(i)
+            backtracking(n: n, k: k, pos: i, current: &current, result: &result)
+            current.removeLast()
+        }
+    }
+    return result
+}
+
+//47. Permutations II
+//Input: nums = [1,1,2]
+//Output:
+//[[1,1,2],[1,2,1],[2,1,1]]
+func permuteUnique(_ nums: [Int]) -> [[Int]] {
+    if nums.count == 0 {return []}
+    if nums.count == 1 {return [nums]}
+    var visited:[Bool] = Array(repeating: false, count: nums.count)
+    var result = Set<[Int]>()
+    var current:[Int] = Array()
+    
+    backtracking(nums: nums, visited: &visited, current: &current,result: &result)
+    
+    func backtracking(nums:[Int], visited:inout [Bool], current: inout [Int],result: inout Set<[Int]>) {
+        if current.count == nums.count {
+            result.insert(current)
+            return
+        }
+        for i in 0..<nums.count {
+            if visited[i] == true {continue}
             
-//?46. Permutations
+            current.append(nums[i])
+            visited[i] = true
+            backtracking(nums: nums, visited: &visited, current: &current, result: &result)
+            current.removeLast()
+            visited[i] = false
+        }
+    }
+    return Array(result)
+}
+
+//46. Permutations
 //Input: nums = [1,2,3]
 //Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
 func permute(_ nums: [Int]) -> [[Int]] {
     if nums.count == 0 {return []}
     if nums.count == 1 {return [nums]}
     var visited:[Bool] = Array(repeating: false, count: nums.count)
-    var res:[[Int]] = Array()
-
-    for ele in 0..<nums.count {
-        var tmp:[Int] = []
-        backtracking(nums: nums, visited: &visited, currIndex: ele, posCount: 0, tmpArr: &tmp)
-    }
+    var result:[[Int]] = Array()
+    var current:[Int] = Array()
     
-    func backtracking(nums:[Int], visited:inout [Bool], currIndex:Int, posCount:Int, tmpArr: inout [Int]) {
-        if posCount == nums.count {
-            res.append(tmpArr)
+    backtracking(nums: nums, visited: &visited, current: &current,result: &result)
+    
+    func backtracking(nums:[Int], visited:inout [Bool], current: inout [Int],result: inout [[Int]]) {
+        if current.count == nums.count {
+            result.append(current)
             return
         }
-        if visited[currIndex] { return }
         
-        visited[currIndex] = true
-        var tmp = tmpArr
-        tmp.append(nums[currIndex])
-        for ele in 0..<nums.count {
-            backtracking(nums: nums, visited: &visited, currIndex: ele, posCount: posCount+1, tmpArr: &tmp )
+        for i in 0..<nums.count {
+            if visited[i] == true {continue}
+            
+            current.append(nums[i])
+            visited[i] = true
+            backtracking(nums: nums, visited: &visited, current: &current, result: &result)
+            current.removeLast()
+            visited[i] = false
         }
-        tmpArr.removeLast()
-        visited[currIndex] = false
     }
-    
-    return res
+    return result
 }
     
 
@@ -73,39 +132,36 @@ func binaryTreePaths(_ root: TreeNode?) -> [String] {
 }
 
 
-//?79. Word Search
+//79. Word Search
 //Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
 //Output: true
 func exist(_ board: [[Character]], _ word: String) -> Bool {
     if word.count == 0 {return true}
-    if board.count == 0 {return false}
+    if board.count == 0 || board[0].count == 0 {return false}
     
     let directions = [[0,-1],[0,1],[1,0],[-1,0]]
-    var isVisited:[[Bool]] = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
+    var visited:[[Bool]] = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
+    let charsArr = Array(word)
     
-    var wordArr:[Character] = Array()
-    for char in word {
-        wordArr.append(char)
-    }
     
-    for i in 0..<board.count {
-        for j in 0..<board[0].count {
-            if backtracking(board:board, wordArr:wordArr, pos:0, isVisited:&isVisited, row:i, column:j) { return true }
+    for m in 0..<board.count {
+        for n in 0..<board[0].count {
+            if backtracking(board:board, charsArr:charsArr, currIndex:0, visited:&visited, row:m, column:n) { return true }
         }
     }
     
-    func backtracking(board:[[Character]], wordArr:[Character], pos:Int, isVisited:inout [[Bool]], row:Int, column:Int) -> Bool {
-        if pos == wordArr.count {return true}
-        if row < 0 || row >= board.count || column < 0 || column >= board[0].count || board[row][column] != wordArr[pos] || isVisited[row][column] {return false}
+    func backtracking(board:[[Character]], charsArr:[Character], currIndex:Int, visited:inout [[Bool]], row:Int, column:Int) -> Bool {
+        if currIndex == charsArr.count {return true}
         
-        isVisited[row][column] = true
+        if row < 0 || row >= board.count || column < 0 || column >= board[0].count || board[row][column] != charsArr[currIndex] || visited[row][column] {return false}
+        
+        visited[row][column] = true
         for dir in directions {
-            if backtracking(board:board, wordArr:wordArr, pos:pos+1, isVisited:&isVisited, row:row+dir[0], column:row+dir[1]) {
-                print(board[row][column])
+            if backtracking(board:board, charsArr:charsArr, currIndex:currIndex+1, visited:&visited, row:row+dir[0], column:column+dir[1]) {
                 return true
             }
         }
-        isVisited[row][column] = false
+        visited[row][column] = false
         return false
     }
     return false
