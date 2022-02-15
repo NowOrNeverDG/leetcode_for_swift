@@ -12,12 +12,95 @@ public class TreeNode {
         self.right = right
     }
 }
+//78. Subsets
+//Input: nums = [1,2,3]
+//Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+func subsets(_ nums: [Int]) -> [[Int]] {
+        
+}
+
+//216. Combination Sum III
+//Input: k = 3, n = 7
+//Output: [[1,2,4]]
+func combinationSum3(_ k: Int, _ n: Int) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    var visited:[Bool] = Array(repeating: false, count: 10)
+    backtracking(k: k, n: n, remain: n, count:0, pos:0, current: &current, visited: &visited, result: &result)
+
+    func backtracking(k:Int, n:Int, remain:Int, count:Int, pos:Int,current:inout [Int], visited:inout [Bool], result:inout [[Int]]) {
+        if remain == 0 && count == k{
+            result.append(current)
+            return
+        } else if count > k || remain < 0 { return }
+        
+        for i in pos...8 {
+            if visited[i] == true {continue}
+            visited[i] = true
+            current.append(i+1)
+            backtracking(k: k, n: n, remain: remain-i-1, count:count+1, pos:i, current: &current, visited: &visited, result: &result)
+            current.removeLast()
+            visited[i] = false
+        }
+    }
+    return result
+}
+
+
+
+
+//?40. Combination Sum II
+//Input: candidates = [10,1,2,7,6,1,5], target = 8
+//Output:[[1,1,6],[1,2,5],[1,7],[2,6]]
+func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    var visited:[Bool] = Array(repeating: false, count: candidates.count)
+    backtracking(candidates: candidates, target: target, pos:0, visited: &visited, current: &current, result: &result)
+    
+    func backtracking(candidates:[Int], target:Int, pos:Int, visited:inout [Bool], current:inout [Int], result:inout [[Int]]) {
+        var sum = 0
+        for ele in current { sum += ele }
+        if sum == target {
+            result.append(current)
+            return
+        } else if sum > target {return}
+        
+        for i in pos..<candidates.count {
+            if visited[i] == true {continue}
+            visited[i] = true
+            current.append(candidates[i])
+            backtracking(candidates: candidates, target: target, pos: i, visited: &visited, current: &current, result: &result)
+            current.removeLast()
+            visited[i] = false
+        }
+    }
+    return result
+}
+
 //39. Combination Sum
 //Input: candidates = [2,3,6,7], target = 7
 //Output: [[2,2,3],[7]]
 func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    backtracking(candidates: candidates, target: target, pos:0, current: &current, result: &result)
     
-    return [[]]
+    func backtracking(candidates:[Int], target:Int, pos:Int, current:inout [Int], result:inout [[Int]]) {
+        var sum = 0
+        for ele in current { sum += ele }
+        if sum == target {
+            result.append(current)
+            return
+        } else if sum > target {return}
+        
+        for i in pos..<candidates.count {
+            current.append(candidates[i])
+            backtracking(candidates: candidates, target: target, pos: i, current: &current, result: &result)
+            current.removeLast()
+        }
+    }
+    return result
 }
 
 //77. Combinations
