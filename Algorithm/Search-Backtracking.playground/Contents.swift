@@ -12,7 +12,105 @@ public class TreeNode {
         self.right = right
     }
 }
-//90. Subsets II
+//37. Sudoku Solver
+//Input: board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
+//Output: [["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]
+func solveSudoku(_ board: inout [[Character]]) {
+    backtracking()
+    
+    func backtracking() -> Bool{
+        for m in 0..<board.count {
+            for n in 0..<board[0].count {
+                if board[m][n] == "." {
+                    for i in "123456789" {
+                        if check(board: board, row: m, column: n, val: i) {
+                            board[m][n] = i
+                            if backtracking() {return true}
+                            board[m][n] = "."
+                        }
+                    }
+                    return false
+
+                }
+            }
+        }
+        return true
+    }
+    
+    func check(board:[[Character]],row:Int,column:Int,val:Character) -> Bool {
+        for i in 0..<9 {
+            if board[row][i] == val {return false}
+            if board[i][column] == val {return false}
+            if board[(row/3)*3+i/3][(column/3)*3+i%3] == val {return false}
+        }
+        return true
+    }
+}
+
+
+//131. Palindrome Partitioning
+//Input: s = "aab"
+//Output: [["a","a","b"],["aa","b"]]
+func partition(_ s: String) -> [[String]] {
+    var result:[[String]] = Array()
+    var current:[String] = Array()
+    var characters:[Character] = Array()
+    for ele in s {
+        characters.append(ele)
+    }
+    backtracking(start: 0, characters:characters, current: &current, result: &result)
+    
+    func backtracking(start:Int, characters:[Character],current:inout [String], result:inout [[String]]) {
+        if start == characters.count {
+            result.append(current)
+            return
+        }
+        
+        for i in start..<characters.count {
+            if !isPalidrome(characters: characters, low: start, high: i) {continue}
+            current.append(String(characters[start...i]))
+            backtracking(start: i+1, characters: characters, current: &current, result: &result)
+            current.removeLast()
+        }
+    }
+    
+    func isPalidrome(characters:[Character], low:Int, high:Int) -> Bool {
+        var low = low
+        var high = high
+        while low <= high {
+            if characters[low] != characters[high] {return false}
+            low += 1
+            high -= 1
+        }
+        return true
+    }
+    
+    return result
+}
+
+
+//?90. Subsets II
+//Input: nums = [1,2,2]
+//Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+func subsetsWithDup(_ nums: [Int]) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    var visited:[Bool] = Array(repeating: false, count: nums.count)
+    backtracking(nums: nums, index:0, visited:&visited, current:&current, result:&result)
+    
+    func backtracking(nums:[Int], index:Int, visited:inout [Bool], current:inout [Int], result:inout [[Int]]) {
+        if visited[index] == true { return }
+        visited[index] = true
+        
+        
+        for i in index..<nums.count {
+            backtracking(nums: nums, index: i+1, visited: &visited, current: &current, result: &result)
+            visited[i] == false
+            current.removeLast()
+        }
+    }
+    return result
+}
 
 //78. Subsets
 //Input: nums = [1,2,3]
