@@ -12,11 +12,26 @@ public class TreeNode {
         self.right = right
     }
 }
+//90. Subsets II
+
 //78. Subsets
 //Input: nums = [1,2,3]
 //Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 func subsets(_ nums: [Int]) -> [[Int]] {
-        
+    var current:[Int] = Array()
+    var result:[[Int]] = [[]]
+    backtracking(num: nums, index: 0, current: &current, result: &result)
+    
+    func backtracking(num:[Int],  index:Int, current:inout [Int], result:inout [[Int]]) {
+        for i in index..<nums.count  {
+            current.append(num[i])
+            result.append(current)
+            backtracking(num: num, index: i+1, current: &current, result: &result)
+            current.removeLast()
+        }
+    }
+    
+    return result
 }
 
 //216. Combination Sum III
