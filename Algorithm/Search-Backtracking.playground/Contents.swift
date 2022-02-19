@@ -13,10 +13,6 @@ public class TreeNode {
     }
 }
 
-
-
-
-
 //51. N-Queens
 //Input: n = 4
 //Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
@@ -64,64 +60,39 @@ func solveNQueens(_ n: Int) -> [[String]] {
     return result
 }
 
-
-//?37. Sudoku Solver
+//37. Sudoku Solver
 //Input: board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
 //Output: [["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]
-func solveNQueens(_ n: Int) -> [[String]] {
-    var result:[[String]] = Array()
-    var board:[[Character]] = Array(repeating: Array(repeating: ".", count: n), count: n)
-    backtracking(col: 0, n: n, board: &board, result: &result)
-    
-    func backtracking(col:Int, n:Int, board:inout [[Character]],result:inout [[String]]) {
-        if col == n {
-            result.append(board.map{ String($0)})
-            return
-        }
-        
-        for row in 0..<n {
-            if validate(board: board, row: row, col: col) {
-                board[row][col] = "Q"
-                backtracking(col: col + 1, n: n, board: &board, result: &result)
-                board[row][col] = "."
-            }
-        }
-    }
-    
-    func validate(board:[[Character]], row:Int, col:Int) -> Bool {
-        for i in 0..<board.count {
-            if board[i][col] == "Q" {return false}
-        }
-        for i in 0..<board[0].count {
-            if board[row][i] == "Q" {return false}
-        }
-        
-        var x = 1
-        while (row+x < board.count && col-x >= 0){
-//                print("\(row)////\(col)")
-            if board[row+x][col-x] == "Q" {return false}
-            x += 1
-        }
-        
-        while(row-x >= 0 && col+x < board.count) {
-//                print("\(row)////\(col)")
-            if board[row-x][col+x] == "Q" {return false}
-            x += 1
-        }
-        
-        while(row+x < board.count && col+x < board[0].count) {
-            if board[row+x][col+x] == "Q" {return false}
-            x += 1
-        }
-        
-        while(row-x >= 0 && col-x >= 0) {
-            if board[row-x][col-x] == "Q" {return false}
-            x += 1
-        }
-        return true
-    }
-    return result
-}
+func solveSudoku(_ board: inout [[Character]]) {
+       backtracking()
+
+       func backtracking() -> Bool{
+           for m in 0..<board.count {
+               for n in 0..<board[0].count {
+                   if board[m][n] == "." {
+                       for i in "123456789" {
+                           if check(board: board, row: m, column: n, val: i) {
+                               board[m][n] = i
+                               if backtracking() {return true}
+                               board[m][n] = "."
+                           }
+                       }
+                       return false
+                   }
+               }
+           }
+           return true
+       }
+
+       func check(board:[[Character]],row:Int,column:Int,val:Character) -> Bool {
+           for i in 0..<9 {
+               if board[row][i] == val {return false}
+               if board[i][column] == val {return false}
+               if board[(row/3)*3+i/3][(column/3)*3+i%3] == val {return false}
+           }
+           return true
+       }
+   }
 
 
 //131. Palindrome Partitioning
