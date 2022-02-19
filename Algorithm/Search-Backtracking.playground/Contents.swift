@@ -24,6 +24,7 @@ func solveNQueens(_ n: Int) -> [[String]] {
     func backtracking(col:Int, n:Int, board:inout [[Character]],result:inout [[String]]) {
         if col == n {
             result.append(board.map{ String($0)})
+            return
         }
         
         for row in 0..<n {
@@ -32,7 +33,6 @@ func solveNQueens(_ n: Int) -> [[String]] {
                 backtracking(col: col + 1, n: n, board: &board, result: &result)
                 board[row][col] = "."
             }
-            
         }
     }
     
@@ -40,26 +40,36 @@ func solveNQueens(_ n: Int) -> [[String]] {
         for i in 0..<board.count {
             if board[i][col] == "Q" {return false}
         }
-        
         for i in 0..<board[0].count {
             if board[row][i] == "Q" {return false}
         }
         
         var x = 1
-        while (row < board.count && col >= 0){
-            if board[row+1][col-1] == "Q" {return false}
+        while (row+x < board.count && col-x >= 0){
+//                print("\(row)////\(col)")
+            if board[row+x][col-x] == "Q" {return false}
             x += 1
         }
         
-        while(row >= 0 && row < board.count) {
-            if board[row-1][col+1] == "Q" {return false}
+        while(row-x >= 0 && col+x < board.count) {
+//                print("\(row)////\(col)")
+            if board[row-x][col+x] == "Q" {return false}
+            x += 1
+        }
+        
+        while(row+x < board.count && col+x < board[0].count) {
+            if board[row+x][col+x] == "Q" {return false}
+            x += 1
+        }
+        
+        while(row-x >= 0 && col-x >= 0) {
+            if board[row-x][col-x] == "Q" {return false}
             x += 1
         }
         return true
     }
     return result
 }
-
 //37. Sudoku Solver
 //Input: board = [["5","3",".",".","7",".",".",".","."],["6",".",".","1","9","5",".",".","."],[".","9","8",".",".",".",".","6","."],["8",".",".",".","6",".",".",".","3"],["4",".",".","8",".","3",".",".","1"],["7",".",".",".","2",".",".",".","6"],[".","6",".",".",".",".","2","8","."],[".",".",".","4","1","9",".",".","5"],[".",".",".",".","8",".",".","7","9"]]
 //Output: [["5","3","4","6","7","8","9","1","2"],["6","7","2","1","9","5","3","4","8"],["1","9","8","3","4","2","5","6","7"],["8","5","9","7","6","1","4","2","3"],["4","2","6","8","5","3","7","9","1"],["7","1","3","9","2","4","8","5","6"],["9","6","1","5","3","7","2","8","4"],["2","8","7","4","1","9","6","3","5"],["3","4","5","2","8","6","1","7","9"]]
