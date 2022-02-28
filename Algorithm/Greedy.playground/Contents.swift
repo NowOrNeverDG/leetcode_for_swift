@@ -1,13 +1,59 @@
 import UIKit
 import Darwin
+//?605. Can Place Flowers
+//Input: flowerbed = [1,0,0,0,1], n = 1
+//Output: true
+func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
+    var input = flowerbed
+    var result = 0
+    if input.count == 1 { return input[0] == n ? false : true}
+    if input.count == 2 {
+        if input.contains(1) { return n == 0}
+    }
+    
+    for i in 0..<input.count {
+        if (input[1] == 0&&input[0] == 0&&i==0) || (input[i] == 0&&input[input.count-2] == 0&&i==input.count-1) || (i<input.count-2&&i>0&&input[i-1] == 0&&input[i+1] == 0&&input[i] == 0) {
+            result += 1
+            input[i] = 1
+        }
+    }
+    print(result)
+    return result == n
+}
+
+
+
+
+//122. Best Time to Buy and Sell Stock II
+//Input: prices = [7,1,5,3,6,4]
+//Output: 7
+func maxProfitII(_ prices: [Int]) -> Int {
+    if prices.count == 0 {return 0}
+    
+    var profit = 0
+    for i in 1..<prices.count {
+        if prices[i] < prices[i-1] {continue}
+        profit += (prices[i] - prices[i-1])
+    }
+    return profit
+}
+
+
 
 //121. Best Time to Buy and Sell Stock
 //Input: prices = [7,1,5,3,6,4]
 //Output: 5
 func maxProfit(_ prices: [Int]) -> Int {
     if prices.count == 0 {return 0}
-    return 0
     
+    var base = Int.max
+    var profit = Int.min
+    
+    for i in prices {
+        base = min(base, i)
+        profit = max(profit, i - base)
+    }
+    return profit
 }
 
 
