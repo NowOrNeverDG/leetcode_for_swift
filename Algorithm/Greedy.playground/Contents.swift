@@ -1,5 +1,40 @@
 import UIKit
 import Darwin
+//665. Non-decreasing Array
+//Input: nums = [4,2,3]
+//Output: true
+func checkPossibility(_ nums: [Int]) -> Bool {
+    var result = 0
+    for i in 0..<nums.count-1 {
+        if nums[i] <= nums[i+1] {continue}
+        
+        result += 1
+        
+    }
+    
+    
+    
+}
+
+//392. Is Subsequence
+//Input: s = "abc", t = "ahbgdc"
+//Output: true
+func isSubsequence(_ s: String, _ t: String) -> Bool {
+    var t = t
+    var s = s
+    for i in s {
+        for _ in s {
+            let tmp = t.removeFirst()
+            if tmp == i {
+                s.removeFirst()
+                break
+            }
+        }
+    }
+    return s.count == 0
+}
+
+
 //?605. Can Place Flowers
 //Input: flowerbed = [1,0,0,0,1], n = 1
 //Output: true
@@ -12,17 +47,26 @@ func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
     }
     
     for i in 0..<input.count {
-        if (input[1] == 0&&input[0] == 0&&i==0) || (input[i] == 0&&input[input.count-2] == 0&&i==input.count-1) || (i<input.count-2&&i>0&&input[i-1] == 0&&input[i+1] == 0&&input[i] == 0) {
-            result += 1
-            input[i] = 1
+        if i==0 {
+            if input[0] == 0 && input[1] == 0 {
+                result += 1
+                input[i] == 1
+            } else if i == input.count-1 {
+                if input[i] == 0 && input[i-1] == 0 {
+                    result += 1
+                    input[i] = 1
+                }
+            } else {
+                if input[i] == 0 && input[i-1] == 0 && input[i+1] == 0 {
+                    result += 1
+                    input[i] = 1
+                }
+            }
         }
     }
     print(result)
     return result == n
 }
-
-
-
 
 //122. Best Time to Buy and Sell Stock II
 //Input: prices = [7,1,5,3,6,4]
