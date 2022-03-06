@@ -1,19 +1,65 @@
 import UIKit
 import Darwin
+//763. Partition Labels
+//Input: s = "ababcbacadefegdehijhklij"
+//Output: [9,7,8]
+func partitionLabels(_ S: String) -> [Int] {
+    if S.count == 0 {return []}
+    
+    let arr:[Character] = Array(S)
+    var endElementDic:[Character:Int] = [:]
+    var startElementDic:[Character:Int] = [:]
+    
+    for i in 0..<arr.count {
+        if startElementDic[arr[i]] == nil {
+            startElementDic[arr[i]] == i
+        } else {
+            endElementDic[arr[i]] == i
+        }
+    }
+    
+    var result:[Int] = Array()
+    
+    
+    
+    
+    
+    
+    return []
+}
+
+//53. Maximum Subarray
+//Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+//Output: 6
+func maxSubArray(_ nums: [Int]) -> Int {
+    var result = nums[0]
+    var preSum = nums[0]
+    for i in 1..<nums.count {
+            preSum = max(preSum+nums[i], nums[i])
+            result = max(preSum, result)
+    }
+    return result
+}
+
+
+
 //665. Non-decreasing Array
 //Input: nums = [4,2,3]
 //Output: true
 func checkPossibility(_ nums: [Int]) -> Bool {
+    var nums = nums
     var result = 0
-    for i in 0..<nums.count-1 {
-        if nums[i] <= nums[i+1] {continue}
+    for i in 1..<nums.count {
+        if nums[i] >= nums[i-1] {continue}
         
         result += 1
-        
+        if i-2>=0 && nums[i-2] > nums[i] {
+            nums[i] = nums[i-1]//4.5.3
+        } else {
+            nums[i-1] = nums[i]//4.2.5
+        }
     }
-    
-    
-    
+    return result <= 1
 }
 
 //392. Is Subsequence
