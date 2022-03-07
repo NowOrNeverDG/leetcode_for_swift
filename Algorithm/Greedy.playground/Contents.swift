@@ -19,12 +19,6 @@ func partitionLabels(_ S: String) -> [Int] {
     }
     
     var result:[Int] = Array()
-    
-    
-    
-    
-    
-    
     return []
 }
 
