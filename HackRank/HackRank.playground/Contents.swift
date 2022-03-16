@@ -73,7 +73,6 @@ Output;
 [zld 93 12]
 [17g 12 25 6]
 */
-
 func primeOrderPriortization(input:[String]) -> [String] {
     //detect non-prime and move them to a specific array
     //sort remain element
@@ -86,15 +85,33 @@ func primeOrderPriortization(input:[String]) -> [String] {
             nonPrimeArr.append(input.remove(at: i))
         }
     }
-    
-    input.sorted { x, y in
-        var splitX = x.split(separator: " ")
-        var splitY = y.split(separator: " ")
-    }
-    
-    
-    
-    
-    
     return []
 }
+
+//Output: Return a list of pairs of integers representing the pairs of IDs of forward and return shipping routes that optimally utilize the given aircraft. If no route is possible, return a list with empty pair.
+/*Example 1:
+Input:
+maxTravelDist = 7000
+forwardRouteList = [[1,2000],[2, 4000],
+[3,6000]]
+returnRouteList=[1,2000]]
+Output:
+[2,111
+Explanation:
+There are any, When amaratiaraFabbo,
+6000, and 8000 miles, respectively. Since
+6000 is the largest use that does not
+exceed 7000, [2,1] is the only optimal pair.
+*//*
+Example 2:
+Input:
+maxTravelDist=10000
+forwardRouteList = [I1, 3000], [2, 5000], [3,
+70001, [4, 10000]]
+returnRouteList = [I1, 2000], [2, 3000], [3,
+40001, [4, 5000]]
+Output: [2, 4], [3, 21]
+Explanation:
+There are two pairs of forward and return shipping routes possible that optimally utilizes the given aircraft. Shipping Route ID2 from the forwardShippingRouteList requires 5000 miles travelled, and Shipping Route ID#4 from returnShippingRouteList also requires 5000 miles travelled. Combined, they add up to 10000 miles travelled. Similarly, Shipping Route ID#3 from forwardShippingRouteList requires 7000 miles travelled, and Shipping Route ID#2 from returnShippingRouteList requires 3000 miles travelled. These also add up to 10000 miles travelled. Therefore, the pairs of forward and return shipping routes that optimally utilize the aircraft are [2, 4] and [3, 2].
+*/
+
