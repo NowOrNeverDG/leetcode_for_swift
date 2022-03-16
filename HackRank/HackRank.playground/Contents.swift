@@ -20,7 +20,6 @@ import Foundation
 // n=4; output: “1, 11, 21, 1211”
 // n=2; output: “1, 11”
 // n=1; output: “1”
-
 func gernerateSeq(input:Int) -> [String] {
     var result:[String] = ["1"]
     var input = input
