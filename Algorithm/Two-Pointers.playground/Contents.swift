@@ -8,6 +8,23 @@ public class ListNode {
         self.next = nil
     }
 }
+
+func plusMinus(arr: [Int]) -> Void {
+    // Write your code here
+    var posCount = 0.0
+    var negCount = 0.0
+    for i in 0..<arr.count {
+        if arr[i] > 0 {
+            posCount += 1
+        } else if arr[i] < 0 {
+            negCount += 1
+        }
+    }
+    print(String(format: "%.6f", posCount/Double(arr.count)))
+    print(String(format: "%.6f", negCount/Double(arr.count)))
+    print(String(format: "%.6f", (Double(arr.count)-posCount-negCount)/Double(arr.count)))
+}
+plusMinus(arr: [-4, 3, -9, 0, 4, 1])
 //524. Longest Word in Dictionary through Deleting
 //Input: s = "abpcplea", dictionary = ["ale","apple","monkey","plea"]
 //Output: "apple"
