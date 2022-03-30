@@ -7,9 +7,9 @@ func partitionLabels(_ S: String) -> [Int] {
     if S.count == 0 {return []}
     
     let arr:[Character] = Array(S)
-    var endElementDic:[Character:Int] = [:]
-    var startElementDic:[Character:Int] = [:]
-    
+    let endElementDic:[Character:Int] = [:]
+    let startElementDic:[Character:Int] = [:]
+
     for i in 0..<arr.count {
         if startElementDic[arr[i]] == nil {
             startElementDic[arr[i]] == i
@@ -18,7 +18,7 @@ func partitionLabels(_ S: String) -> [Int] {
         }
     }
     
-    var result:[Int] = Array()
+    var _:[Int] = Array()
     return []
 }
 
