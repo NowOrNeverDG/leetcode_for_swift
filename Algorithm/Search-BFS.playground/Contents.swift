@@ -10,8 +10,32 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
 //Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
 //Output: 2
 func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
+    var stationToBus = [Int:Set<Int>]()
+    for (i,arr) in routes.enumerated() {
+        for ele in arr {
+            stationToBus[ele]?.insert(i)
+        }
+    }
+    
+    var visitedStation = Set<Int>()//station
+    visitedStation.insert(source)
+    var buses = 0
+    var busAvailable:[Int] = routes[source]
+    while (!busAvailable.isEmpty) {
+        buses += 1
+        for busID in busAvailable {
+            var stations = routes[busID]
+            for station in stations {
+                visitedStation.insert(station)
+                if station == target {return buses}
+                
+            }
+            
+        }
+    }
     
     
+    return -1
 }
 
 
