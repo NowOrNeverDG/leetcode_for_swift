@@ -10,33 +10,43 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
 //Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
 //Output: 2
 func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
-    var stationToBus = [Int:Set<Int>]()
-    for (i,arr) in routes.enumerated() {
-        for ele in arr {
-            stationToBus[ele]?.insert(i)
+    var stationToBus = [Int: [Int]]()
+    for (bus,stops) in routes.enumerated() {
+        for stop in stops {
+            stationToBus[stop, default: [Int]()].append(bus)
         }
     }
+    print("TESTING: StationToBus = \(stationToBus.count)")
+    var visitedBus = [Int]()
+    var remainBus = [Int]()
+    remainBus.append(contentsOf: stationToBus[source, default: []])
+    var totalBuses = 0
     
-    var visitedStation = Set<Int>()//station
-    visitedStation.insert(source)
-    var buses = 0
-    var busAvailable:[Int] = routes[source]
-    while (!busAvailable.isEmpty) {
-        buses += 1
-        for busID in busAvailable {
-            var stations = routes[busID]
-            for station in stations {
-                visitedStation.insert(station)
-                if station == target {return buses}
-                
-            }
+    while (!remainBus.isEmpty) {
+        totalBuses += 1
+        var size = remainBus.count
+        
+        while (size != 0) {
+            let currBus = remainBus.removeLast()
+            if visitedBus.contains(currBus) {continue}
+            visitedBus.append(currBus)
             
+            for station in routes[currBus] {
+                if station == target {return totalBuses}
+                
+                for bus in stationToBus[station,default: []] {
+                    if remainBus.contains(bus) {continue}
+                    remainBus.append(bus)
+                }
+            }
+            size -= 1
         }
     }
-    
-    
     return -1
 }
+//numBusesToDestination([[1,2,7],[3,6,7]], 1, 6)
+//numBusesToDestination([[7,12],[4,5,15],[6],[15,19],[9,12,13]], 15, 12)
+numBusesToDestination([[0,1,6,16,22,23],[14,15,24,32],[4,10,12,20,24,28,33],[1,10,11,19,27,33],[11,23,25,28],[15,20,21,23,29],[29]], 4, 21)
 
 
 //279. Perfect Squares
