@@ -6,6 +6,14 @@ func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) 
     return 0
 }
 
+//815. Bus Routes
+//Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
+//Output: 2
+func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
+    
+    
+}
+
 
 //279. Perfect Squares
 //Input: n = 12
