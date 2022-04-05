@@ -1,4 +1,87 @@
 import UIKit
+import Foundation
+import Darwin
+func sum(_ str: String,num1:Int,num2:Int) -> Int {
+    var result = num1;
+    if str == "+" {
+        result = num1 + num2;
+    }else if str == "-" {
+        result = num1 - num2;
+    }
+    return result;
+}
+
+func sum1(from:Int,array:Array<Character>) -> Int {
+     
+     var num1 = 0;
+     var num2 = 0;
+     var ff = "";
+     
+     let listArr :NSMutableArray = NSMutableArray.init();
+     
+     for i in from..<array.count {
+         let str:String = String(array[i])
+         if str == "(" {
+             listArr.add(["num":num1,"sign":ff]);
+             num1 = 0;
+             ff = "";
+         }else if str == ")" {
+             num1 = sum(ff, num1:num1, num2:num2)
+             num2 = 0;
+             ff = "";
+             if listArr.count > 0 {
+                 let dict = listArr.lastObject;
+                 listArr.removeLastObject();
+                 let tResult = dict as![String:Any]
+                 let num = tResult["num"];
+                 let sign = tResult["sign"];
+                 if sign as! String != "" {
+                     num1 = sum(sign as! String, num1:num as! Int, num2:num1)
+                 }
+             }
+         }else if str == "+" {
+             if ff == "" {
+                 ff = str;
+                 continue;
+             }
+             num1 = sum(ff, num1:num1, num2:num2)
+             num2 = 0;
+             ff = str;
+         }else if str == "-" {
+             if ff == "" {
+                 ff = str;
+                 continue;
+             }
+             num1 = sum(ff, num1:num1, num2:num2)
+             num2 = 0;
+             ff = str;
+         }else if str == " " {
+
+         }else{
+             if ff != "" {
+                 num2 = num2*10 + (str as NSString).integerValue;
+             }else{
+                 num1 = num1*10 + (str as NSString).integerValue;
+             }
+         }
+     }
+     
+     if ff != "" {
+         num1 = sum(ff, num1:num1, num2:num2)
+     }
+     
+     return num1;
+ }
+
+func calculate(_ str: String) -> Int {
+     let array = str.map{$0};
+     let result = sum1(from: 0, array: array)
+     return result;
+ }
+calculate("(1+2)*3")
+
+
+
 //127. Word Ladder
 //Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
 //Output: 5
