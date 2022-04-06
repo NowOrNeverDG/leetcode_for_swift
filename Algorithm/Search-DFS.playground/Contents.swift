@@ -1,4 +1,33 @@
 import Darwin
+//212. Word Search II
+//Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
+//Output: ["eat","oath"]
+func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+    let directions: [[Int]] = [[0,1],[0,-1],[1,0],[-1,0]]
+    var isVisited:[[Bool]] = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
+    var result = [String]()
+    var testString = ""
+    for str in words {
+        dfs(board: board, row: 0, column: 0, word: str, testString: &testString, isVisited: &isVisited, result: &result)
+    }
+    
+    func dfs (board:[[Character]], row: Int, column: Int, word:String, testString: inout String, isVisited: inout [[Bool]], result:inout [String]) {
+        if row < 0 || row > board.count-1 || column < 0 || column > board[0].count-1 || isVisited[row][column] == true || !word.hasPrefix(testString) {return}
+        if word == testString { result.append(word)}
+        
+        isVisited[row][column] = true
+        for dir in directions {
+            testString.append(board[row][column])
+            dfs(board: board, row: row + dir[0], column: column + dir[1], word: word, testString: &testString, isVisited: &isVisited, result: &result)
+        }
+        isVisited[row][column] = false
+        testString.removeLast()
+    }
+    return result
+}
+findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], ["oath","pea","eat","rain"])
+
+
 //417. Pacific Atlantic Water Flow
 //Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
 //Output: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
@@ -39,8 +68,6 @@ func pacificAtlantic(_ heights: [[Int]]) -> [[Int]] {
     
     return result
 }
-
-
 
 //130. Surrounded Regions
 //Input: board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
@@ -131,10 +158,6 @@ func numIslands(_ grid: [[Character]]) -> Int {
     }
     return islandNo
 }
-
-
-
-
 
 //695. Max Area of Island
 //Input: grid = [[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]
