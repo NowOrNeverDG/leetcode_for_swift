@@ -1,85 +1,45 @@
 import UIKit
 import Foundation
 import Darwin
-func sum(_ str: String,num1:Int,num2:Int) -> Int {
-    var result = num1;
-    if str == "+" {
-        result = num1 + num2;
-    }else if str == "-" {
-        result = num1 - num2;
+//815. Bus Routes
+//Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
+//Output: 2
+func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
+    if source == target { return 0 }
+    var stopToBuses = [Int: [Int]]()
+    
+    for (bus, stops) in routes.enumerated() {
+        for stop in stops {
+            stopToBuses[stop, default:[Int]()].append(bus)
+        }
     }
-    return result;
+    
+    if stopToBuses[source] == nil || stopToBuses[target] == nil { return -1 }
+    
+    var queue = stopToBuses[source, default: []]
+    var visited = Set(queue)
+    let destBuses = Set(stopToBuses[target, default:[]])
+    var totalBusses = 1
+    
+    while !queue.isEmpty {
+        let count = queue.count
+        
+        for _ in 0..<count {
+            let currBus = queue.removeFirst()
+            
+            if destBuses.contains(currBus) { return totalBusses }
+            
+            for stop in routes[currBus] {
+                for nextBus in stopToBuses[stop, default: []] where !visited.contains(nextBus) {
+                    visited.insert(nextBus)
+                    queue.append(nextBus)
+                }
+            }
+        }
+        totalBusses += 1
+    }
+    return -1
 }
-
-func sum1(from:Int,array:Array<Character>) -> Int {
-     
-     var num1 = 0;
-     var num2 = 0;
-     var ff = "";
-     
-     let listArr :NSMutableArray = NSMutableArray.init();
-     
-     for i in from..<array.count {
-         let str:String = String(array[i])
-         if str == "(" {
-             listArr.add(["num":num1,"sign":ff]);
-             num1 = 0;
-             ff = "";
-         }else if str == ")" {
-             num1 = sum(ff, num1:num1, num2:num2)
-             num2 = 0;
-             ff = "";
-             if listArr.count > 0 {
-                 let dict = listArr.lastObject;
-                 listArr.removeLastObject();
-                 let tResult = dict as![String:Any]
-                 let num = tResult["num"];
-                 let sign = tResult["sign"];
-                 if sign as! String != "" {
-                     num1 = sum(sign as! String, num1:num as! Int, num2:num1)
-                 }
-             }
-         }else if str == "+" {
-             if ff == "" {
-                 ff = str;
-                 continue;
-             }
-             num1 = sum(ff, num1:num1, num2:num2)
-             num2 = 0;
-             ff = str;
-         }else if str == "-" {
-             if ff == "" {
-                 ff = str;
-                 continue;
-             }
-             num1 = sum(ff, num1:num1, num2:num2)
-             num2 = 0;
-             ff = str;
-         }else if str == " " {
-
-         }else{
-             if ff != "" {
-                 num2 = num2*10 + (str as NSString).integerValue;
-             }else{
-                 num1 = num1*10 + (str as NSString).integerValue;
-             }
-         }
-     }
-     
-     if ff != "" {
-         num1 = sum(ff, num1:num1, num2:num2)
-     }
-     
-     return num1;
- }
-
-func calculate(_ str: String) -> Int {
-     let array = str.map{$0};
-     let result = sum1(from: 0, array: array)
-     return result;
- }
-calculate("(1+2)*3")
-
 
 
 //127. Word Ladder
@@ -88,49 +48,6 @@ calculate("(1+2)*3")
 func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
     return 0
 }
-
-//815. Bus Routes
-//Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
-//Output: 2
-func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> Int {
-    var stationToBus = [Int: [Int]]()
-    for (bus,stops) in routes.enumerated() {
-        for stop in stops {
-            stationToBus[stop, default: [Int]()].append(bus)
-        }
-    }
-    print("TESTING: StationToBus = \(stationToBus.count)")
-    var visitedBus = [Int]()
-    var remainBus = [Int]()
-    remainBus.append(contentsOf: stationToBus[source, default: []])
-    var totalBuses = 0
-    
-    while (!remainBus.isEmpty) {
-        totalBuses += 1
-        var size = remainBus.count
-        
-        while (size != 0) {
-            let currBus = remainBus.removeLast()
-            if visitedBus.contains(currBus) {continue}
-            visitedBus.append(currBus)
-            
-            for station in routes[currBus] {
-                if station == target {return totalBuses}
-                
-                for bus in stationToBus[station,default: []] {
-                    if remainBus.contains(bus) {continue}
-                    remainBus.append(bus)
-                }
-            }
-            size -= 1
-        }
-    }
-    return -1
-}
-//numBusesToDestination([[1,2,7],[3,6,7]], 1, 6)
-//numBusesToDestination([[7,12],[4,5,15],[6],[15,19],[9,12,13]], 15, 12)
-numBusesToDestination([[0,1,6,16,22,23],[14,15,24,32],[4,10,12,20,24,28,33],[1,10,11,19,27,33],[11,23,25,28],[15,20,21,23,29],[29]], 4, 21)
-
 
 //279. Perfect Squares
 //Input: n = 12
@@ -191,6 +108,5 @@ func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
     }
     return -1
 }
-shortestPathBinaryMatrix([[0,0,0],[1,1,0],[1,1,0]])
 
 

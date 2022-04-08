@@ -1,32 +1,53 @@
 import Darwin
+let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+print(alphabet[alphabet.startIndex...alphabet.index(alphabet.startIndex, offsetBy: 3)])
 //212. Word Search II
 //Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
 //Output: ["eat","oath"]
-func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
-    let directions: [[Int]] = [[0,1],[0,-1],[1,0],[-1,0]]
-    var isVisited:[[Bool]] = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
-    var result = [String]()
-    var testString = ""
-    for str in words {
-        dfs(board: board, row: 0, column: 0, word: str, testString: &testString, isVisited: &isVisited, result: &result)
-    }
+class TrieNode {
     
-    func dfs (board:[[Character]], row: Int, column: Int, word:String, testString: inout String, isVisited: inout [[Bool]], result:inout [String]) {
-        if row < 0 || row > board.count-1 || column < 0 || column > board[0].count-1 || isVisited[row][column] == true || !word.hasPrefix(testString) {return}
-        if word == testString { result.append(word)}
-        
-        isVisited[row][column] = true
-        for dir in directions {
-            testString.append(board[row][column])
-            dfs(board: board, row: row + dir[0], column: column + dir[1], word: word, testString: &testString, isVisited: &isVisited, result: &result)
-        }
-        isVisited[row][column] = false
-        testString.removeLast()
-    }
-    return result
 }
-findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], ["oath","pea","eat","rain"])
+func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+    
+}
+func findWords1(_ board: [[Character]], _ words: [String]) -> [String] {
+        let directions: [[Int]] = [[0,1],[0,-1],[1,0],[-1,0]]
+        var isVisited:[[Bool]] = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
+        var result = [String]()
+        var testString = ""
+        
+        for i in 0..<board.count{
+            for j in 0..<board[0].count {
+                for str in words {
+                    dfs(board: board, row: i, column: j, word: str, testString: &testString, isVisited: &isVisited, result: &result)
+                }
+            }
+        }
 
+        func dfs (board:[[Character]], row: Int, column: Int, word:String, testString: inout String, isVisited: inout [[Bool]], result:inout [String]) {
+            if word.count == testString.count {
+                if word[word.startIndex...word.index(word.startIndex, offsetBy: testString.count-1)] == testString {
+                    if !result.contains(word) {
+                        result.append(word)
+                    }
+                }
+                return
+            }
+            
+            if row < 0 || row > board.count-1 || column < 0 || column > board[0].count-1 || isVisited[row][column] == true {return}
+            
+            isVisited[row][column] = true
+            for dir in directions {
+                testString.append(board[row][column])
+                dfs(board: board, row: row + dir[0], column: column + dir[1], word: word, testString: &testString, isVisited: &isVisited, result: &result)
+                testString.removeLast()
+            }
+            isVisited[row][column] = false
+
+            
+        }
+        return result
+    }
 
 //417. Pacific Atlantic Water Flow
 //Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
