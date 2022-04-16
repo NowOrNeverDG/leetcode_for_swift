@@ -1,23 +1,59 @@
 import Darwin
-let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-print(alphabet[alphabet.startIndex...alphabet.index(alphabet.startIndex, offsetBy: 3)])
+
 //212. Word Search II
 //Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
 //Output: ["eat","oath"]
 class TrieNode {
-    var children: [Character:TrieNode] = [:]
-    var word = ""
-    
-    func add(word:String) {
-        var current = self
-        for char in word {
-            if let word = current
-        }
-    }
+    var child: [Character:TrieNode] = [:]
+    var word:String?//每个单词的最后一个node记上word用于return
 }
 func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
+    let directions = [[1,0],[-1,0],[0,1],[0,-1]]
+    var visited = Array(repeating: Array(repeating: false, count: board[0].count), count: board.count)
+    func buildTries(_ word:[String]) -> TrieNode{
+        let root = TrieNode()
+        for word in words {
+            var cur = root
+            for char in word {
+                if cur.child[char] == nil {
+                    cur.child[char] = TrieNode()
+                }
+                cur = cur.child[char]!
+            }
+            cur.word = word
+        }
+        return root
+    }
     
+    func dfs(board:[[Character]], row:Int, column:Int, trieNode:TrieNode, result: inout [String]) {
+        if let word = trieNode.word {
+            if !result.contains(word) {
+                result.append(word)
+            }
+        }
+        
+        if row < 0 || row >= board.count || column < 0 || column >= board[0].count || visited[row][column] == true {return}
+        guard let currNode = trieNode.child[board[row][column]] else {return}
+        
+        visited[row][column] = true
+        for dir in directions {
+            dfs(board: board, row: row+dir[0], column: column+dir[1], trieNode: currNode, result: &result)
+        }
+        visited[row][column] = false
+
+    }
+    
+    let root = buildTries(words)
+    var result = [String]()
+    for i in 0..<board.count {
+        for j in 0..<board[0].count {
+            dfs(board: board, row: i, column: j, trieNode: root, result: &result)
+        }
+    }
+    return result
 }
+findWords([["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], ["oath","pea","eat","rain"])
+
 
 //417. Pacific Atlantic Water Flow
 //Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]

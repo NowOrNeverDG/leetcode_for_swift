@@ -4,29 +4,30 @@ import Darwin
 //Input: nums = [8,2,4,7], limit = 4
 //Output: 2
 func longestSubarray(_ nums: [Int], _ limit: Int) -> Int {
-    if nums.count == 0 {return 0}
+    var minDeque = [Int]()
+    var maxDeque = [Int]()
+
     var head = 0
-    var tail = 1
-    
-    var minV = -1
-    var maxV = -1
     var length = 0
-    while (head < nums.count && tail < nums.count) {
-        if abs(nums[head] - nums[tail]) > 4 {
-            tail += 1
-            head = tail-1
-        } else {
-            if tail-1 == head {
-                maxV = max[nums[head],nums[tail]
-                minV = min[nums[head],nums[tail]
-                tail += 1
-            }
-                           minV = min(minV,nums[tail])
-                           maxV = max(maxV, nums[tail])
-                           length = tail - head
-                           tail += 1
+
+    for tail in 0..<nums.count {
+        while (!minDeque.isEmpty && nums[minDeque.last!] > nums[tail]) {
+            minDeque.removeLast()
         }
+        
+        while (!maxDeque.isEmpty && nums[maxDeque.last!] < nums[tail]) {
+            maxDeque.removeLast()
+        }
+        minDeque.append(tail)
+        maxDeque.append(tail)
+        
+        while (!maxDeque.isEmpty && !minDeque.isEmpty && nums[maxDeque.first!] - nums[minDeque.first!] > limit ) {
+            if maxDeque.first! == head {maxDeque.removeFirst()}
+            if minDeque.first! == head {minDeque.removeFirst()}
+            head += 1
+        }
+        length = max(length, tail-head+1)
     }
     return length
-}
+    }
 longestSubarray([8,2,4,7], 4)
