@@ -95,7 +95,7 @@ forwardRouteList = [[1,2000],[2, 4000],
 [3,6000]]
 returnRouteList=[1,2000]]
 Output:
-[2,111
+[2,1]
 Explanation:
 There are any, When amaratiaraFabbo,
 6000, and 8000 miles, respectively. Since
@@ -105,12 +105,45 @@ exceed 7000, [2,1] is the only optimal pair.
 Example 2:
 Input:
 maxTravelDist=10000
-forwardRouteList = [I1, 3000], [2, 5000], [3,
-70001, [4, 10000]]
-returnRouteList = [I1, 2000], [2, 3000], [3,
-40001, [4, 5000]]
+forwardRouteList = [1, 3000], [2, 5000], [3,
+7000], [4, 10000]]
+returnRouteList = [1, 2000], [2, 3000], [3,
+4000], [4, 5000]]
 Output: [2, 4], [3, 21]
 Explanation:
 There are two pairs of forward and return shipping routes possible that optimally utilizes the given aircraft. Shipping Route ID2 from the forwardShippingRouteList requires 5000 miles travelled, and Shipping Route ID#4 from returnShippingRouteList also requires 5000 miles travelled. Combined, they add up to 10000 miles travelled. Similarly, Shipping Route ID#3 from forwardShippingRouteList requires 7000 miles travelled, and Shipping Route ID#2 from returnShippingRouteList requires 3000 miles travelled. These also add up to 10000 miles travelled. Therefore, the pairs of forward and return shipping routes that optimally utilize the aircraft are [2, 4] and [3, 2].
 */
 
+
+func predictDays(day: [Int], k: Int) -> [Int] {
+    let n = day.count
+    var left = Array(repeating: 0, count: n)
+    var right = Array(repeating: 0, count: n)
+    
+    for i in 1..<n {
+        if day[i] <= day[i-1] {
+            left[i] = left[i-1]
+        }else {
+            left[i] = i
+        }
+    }
+    
+    right[n-1] = n-1
+    
+    for i in 0...n-2 {
+        if day[n-2-i] <= day[n-2-i+1] {
+                right[n-2-i] = right[n-2-i+1]
+            }else {
+                right[n-2-i] = n-2-i
+            }
+    }
+    
+    var result = [Int]()
+    for i in k..<n-k {
+        if i - left[i] >= k && right[i]-i >= k {
+            result.append(i+1)
+        }
+
+    }
+    return result
+}
