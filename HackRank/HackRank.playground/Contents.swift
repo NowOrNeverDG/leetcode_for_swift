@@ -115,6 +115,7 @@ There are two pairs of forward and return shipping routes possible that optimall
 */
 
 
+
 func predictDays(day: [Int], k: Int) -> [Int] {
     let n = day.count
     var left = Array(repeating: 0, count: n)

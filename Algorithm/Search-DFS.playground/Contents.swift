@@ -1,5 +1,44 @@
 import Darwin
 
+
+//1258. Synonymous Sentences
+//Input: synonyms = [["happy","joy"],["sad","sorrow"],["joy","cheerful"]], text = "I am happy today but was sad yesterday"
+//Output: ["I am cheerful today but was sad yesterday","I am cheerful today but was sorrow yesterday","I am happy today but was sad yesterday","I am happy today but was sorrow yesterday","I am joy today but was sad yesterday","I am joy today but was sorrow yesterday"]
+func generateSentences(_ synonyms: [[String]], _ text: String) -> [String] {
+    let textArr = (text.split(separator: " ")) as! [String]
+    var result = Set<[String]>()
+    result.insert(textArr)
+    for i in 0..<synonyms.count {
+        dfs(textArr:textArr, index:i, result:&result)
+    }
+    
+    func dfs(textArr: [String], index:Int, result:inout Set<[String]>) {
+        if index >= synonyms.count {return}
+        
+        var temp = textArr
+        for i in 0..<textArr.count {
+            if textArr[i] == synonyms[i][0] {
+                temp[i] = synonyms[i][1]
+                result.insert(temp)
+            }
+            else if textArr[i] == synonyms[i][1] {
+                temp[i] = synonyms[i][0]
+                result.insert(temp)
+            }
+        }
+        
+        dfs(textArr: temp, index: index+1, result: &result)
+    }
+    
+    var res = [String]()
+    for ele in result {
+        res.append(ele.joined(separator: " "))
+    }
+    return res
+}
+generateSentences([["happy","joy"],["sad","sorrow"],["joy","cheerful"]], "I am happy today but was sad yesterday")
+
+
 //212. Word Search II
 //Input: board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]], words = ["oath","pea","eat","rain"]
 //Output: ["eat","oath"]
