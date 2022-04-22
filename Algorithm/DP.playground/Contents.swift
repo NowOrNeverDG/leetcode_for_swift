@@ -1,36 +1,155 @@
 import UIKit
-
-func calculateMinimumHP(_ dungeon: [[Int]]) -> Int {
-    guard dungeon.count > 0 else {
-        return 1
-    }
+import Darwin
+//70. Climbing Stairs
+//Input: n = 2
+//Output: 2
+func climbStairs(_ n: Int) -> Int {
+    if n == 1 {return 1}
+    if n == 2 {return 2}
     
-    let rows = dungeon.count
-    let columns = dungeon[0].count
-    
-    var dp = Array(repeating: Array(repeating: 0, count: columns), count: rows)
-
-    // Setup min value to enter before princess (P) Cell
-    dp[rows-1][columns-1] = max(1 - dungeon[rows-1][columns-1], 1)
-    
-    // Setting last column value
-    for i in (0...rows-2).reversed() {
-        dp[i][columns-1] = max(dp[i+1][columns-1] - dungeon[i][columns-1], 1)
+    var memo = Array(repeating: 0, count: n)
+    memo[0] = 1
+    memo[1] = 2
+    for i in 2..<n {
+        memo[i] = memo[i-1] + memo[i-2]
     }
+    return memo.last!
+}
 
-    // Setting last rows value
-    for j in (0...columns-2).reversed() {
-        dp[rows-1][j] = max(dp[rows-1][j+1] - dungeon[rows-1][j], 1)
+//198. House Robber
+//Input: nums = [1,2,3,1]
+//Output: 4
+func rob(_ nums: [Int]) -> Int {
+    let n = nums.count
+    if nums.count == 1 {return nums[0]}
+    if nums.count == 2 {return max(nums[0], nums[1])}
+    var memo = Array(repeating: 0, count: n)
+    memo[0] = nums[0]
+    memo[1] = max(nums[0], nums[1])
+    for i in 2..<n {
+        memo[i] = max(memo[i-1], memo[i-2]+nums[i])
     }
+    print(memo)
+    return memo.last!
+}
 
-    // Setting remaining cells
-    for i in (0...rows-2).reversed() {
-        for j in (0...columns-2).reversed() {
-            dp[i][j] = max(min(dp[i+1][j],dp[i][j+1]) - dungeon[i][j], 1)
+//213. House Robber II
+//Input: nums = [2,3,2]
+//Output: 3
+func rob2(_ nums: [Int]) -> Int {
+    let n = nums.count
+    if nums.count == 1 {return nums[0]}
+    if nums.count == 2 {return max(nums[0], nums[1])}
+    if nums.count == 3 {return max(nums[0], nums[1],nums[2])}
+    var memo1 = Array(repeating: 0, count: n-1)
+    memo1[0] = nums[1]
+    memo1[1] = max(nums[1], nums[2])
+    var memo2 = Array(repeating: 0, count: n-1)
+    memo2[0] = nums[0]
+    memo2[1] = max(nums[0], nums[1])
+    
+    for i in 2..<n-1 {
+        memo1[i] = max(memo1[i-1], memo1[i-2] + nums[i+1])
+        memo2[i] = max(memo2[i-1], memo2[i-2] + nums[i])
+    }
+    return max(memo1.last!, memo2.last!)
+}
+
+/// GRID
+//64. Minimum Path Sum
+//Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
+//Output: 7
+func minPathSum(_ grid: [[Int]]) -> Int {
+    let rows = grid.count
+    let columns = grid[0].count
+    var memo = Array(repeating: Array(repeating: 0, count: grid[0].count), count: grid.count)
+
+    for i in (0..<rows).reversed() {
+        for j in (0..<columns).reversed() {
+            if i == rows-1 && j == columns-1 {
+                memo[i][j] = grid[i][j]
+                continue
+            }
+            else if i == rows - 1 {
+                memo[i][j] = grid[i][j] + memo[i][j+1]
+            }
+            else if j == columns - 1 {
+                memo[i][j] = grid[i][j] + memo[i+1][j]
+            } else {
+                memo[i][j] = grid[i][j] + min(memo[i+1][j], memo[i][j+1])
+            }
         }
     }
-    return dp.first!.first!
+    return memo[0][0]
 }
-calculateMinimumHP([[-2,-3,3],[-5,-10,1],[10,30,-5]]) // 7
+minPathSum([[1,3,1],[1,5,1],[4,2,1]])
+
+//62. Unique Paths
+//Input: m = 3, n = 7
+//Output: 28
+func uniquePaths(_ m: Int, _ n: Int) -> Int {
+    var memo = Array(repeating: Array(repeating: 0, count: n), count: m)
+    for i in (0..<m).reversed() {
+        for j in (0..<n).reversed() {
+            if i == m-1 || j == n-1 {
+                memo[i][j] = 1
+            } else {
+                memo[i][j] = memo[i+1][j] + memo[i][j+1]
+            }
+        }
+    }
+    return memo[0][0]
+}
+uniquePaths(3, 7)
+
+//413. Arithmetic Slices
+//Input: nums = [1,2,3,4]
+//Output: 3
+func numberOfArithmeticSlices(_ nums: [Int]) -> Int {
+    let n = nums.count
+    if n <= 2 {return 0}
+    var memo = Array(repeating: 0, count: n)
+    var total = 0
+    for i in 2..<n {
+        if nums[i] - nums[i-1] == nums[i-1] - nums[i-2] {
+            memo[i] = memo[i-1] + 1
+            total += memo[i]
+
+        }
+    }
+    return total
+}
+
+//343. Integer Break
+//Input: n = 2
+//Output: 1
+func integerBreak(_ n: Int) -> Int {
+       
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//303. Range Sum Query
+//Input:["NumArray", "sumRange", "sumRange", "sumRange"],[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+//Output: [null, 1, -1, -3]
+
+
+//174. Dungeon Game
+//Input: dungeon = [[-2,-3,3],[-5,-10,1],[10,30,-5]]
+//Output: 7
+
 
 

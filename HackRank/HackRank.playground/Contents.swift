@@ -148,3 +148,38 @@ func predictDays(day: [Int], k: Int) -> [Int] {
     }
     return result
 }
+
+
+
+func predictDays(day: [Int], k: Int) -> [Int] {
+    let n = day.count
+    var left = Array(repeating: 0, count: n)
+    var right = Array(repeating: 0, count: n)
+    
+    for i in 1..<n {
+        if day[i] <= day[i-1] {
+            left[i] = left[i-1]
+        }else {
+            left[i] = i
+        }
+    }
+    
+    right[n-1] = n-1
+    
+    for i in 0...n-2 {
+        if day[n-2-i] <= day[n-2-i+1] {
+                right[n-2-i] = right[n-2-i+1]
+            }else {
+                right[n-2-i] = n-2-i
+            }
+    }
+    
+    var result = [Int]()
+    for i in k..<n-k {
+        if i - left[i] >= k && right[i]-i >= k {
+            result.append(i+1)
+        }
+
+    }
+    return result
+}
