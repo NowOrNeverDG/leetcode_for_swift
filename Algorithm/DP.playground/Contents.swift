@@ -1,5 +1,64 @@
 import UIKit
 import Darwin
+
+//91. Decode Ways
+//Input: s = "12"
+//Output: 2
+func numDecodings(_ s: String) -> Int {
+    let sArr = Array(s)
+    var memo = Array(repeating: 0, count: sArr.count+1)
+    memo[1] = 1
+    
+    for i in 2..<memo.count {
+        if sArr[i-1] == "1" || sArr[i-1] == "2"{
+            memo[i] = memo[i-1]+2
+        }else {
+            memo[i] = memo[i-1]+1
+        }
+    }
+    return memo.last!
+}
+numDecodings("226")
+//303. Range Sum Query
+//Input:["NumArray", "sumRange", "sumRange", "sumRange"],[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+//Output: [null, 1, -1, -3]
+
+
+//279. Perfect Squares
+//Input: n = 12
+//Output: 3
+
+//343. Integer Break
+//Input: n = 2
+//Output: 1
+func integerBreak1(_ n: Int) -> Int {
+    var memo = Array(repeating: 0, count: n+1)
+    memo[1] = 1
+    for i in 2...n {
+        for j in 1..<i {
+            memo[i] = max((i-j)*j,memo[i-j]*j,(i-j)*memo[j], memo[i-j]*memo[j],memo[i])
+        }
+    }
+    return memo[n]
+}
+func integerBreak(_ n: Int) -> Int {
+    var dic = [Int:Int]()
+    dic[1] = 1
+
+    func backtracking(no:Int) -> Int {
+        if let val = dic[n] { return val }
+        
+        var result = 0
+        for i in 0..<no {
+            result = max(backtracking(no: i), result )
+        }
+        dic[no] = result
+        return result
+    }
+    
+    return backtracking(no: n)
+}
+
 //70. Climbing Stairs
 //Input: n = 2
 //Output: 2
@@ -100,7 +159,6 @@ func uniquePaths(_ m: Int, _ n: Int) -> Int {
     }
     return memo[0][0]
 }
-uniquePaths(3, 7)
 
 //413. Arithmetic Slices
 //Input: nums = [1,2,3,4]
@@ -120,36 +178,29 @@ func numberOfArithmeticSlices(_ nums: [Int]) -> Int {
     return total
 }
 
-//343. Integer Break
-//Input: n = 2
-//Output: 1
-func integerBreak(_ n: Int) -> Int {
-       
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//303. Range Sum Query
-//Input:["NumArray", "sumRange", "sumRange", "sumRange"],[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
-//Output: [null, 1, -1, -3]
-
-
 //174. Dungeon Game
 //Input: dungeon = [[-2,-3,3],[-5,-10,1],[10,30,-5]]
 //Output: 7
-
-
-
+func calculateMinimumHP(_ dungeon: [[Int]]) -> Int {
+    let rows  = dungeon.count
+    let columns = dungeon[0].count
+    var memo = Array(repeating: Array(repeating: 0, count: columns), count: rows)
+    
+    for i in (0..<rows).reversed() {
+        for j in (0..<columns).reversed() {
+            var tmp = 0
+            if i == rows - 1 && j == columns - 1 {
+                tmp = 1 - dungeon[i][j]
+            } else if i == rows - 1 {
+                tmp = memo[i][j+1] - dungeon[i][j]
+            } else if j == columns - 1 {
+                tmp = memo[i+1][j] - dungeon[i][j]
+            } else {
+                tmp = min(memo[i][j+1], memo[i+1][j]) - dungeon[i][j]
+            }
+            if tmp <= 0 {tmp = 1}
+            memo[i][j] = tmp
+        }
+    }
+    return memo[0][0]
+}
