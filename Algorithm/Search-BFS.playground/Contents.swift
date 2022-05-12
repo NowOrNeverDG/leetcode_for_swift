@@ -46,8 +46,42 @@ func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> I
 //Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
 //Output: 5
 func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
+    var visited = Set<String>()
+    var queue = [String]()
+    queue.append(beginWord)
+    var step = 0
+    let a2z = "abcdefghijklmnopqrstuvwxyz"
+    
+    func buildNewString(alphabet:Character, word: String, index:Int) -> String {
+        var wordStr = Array(word)
+        wordStr[index] = alphabet
+        var newStr = ""
+        for char in wordStr {
+            newStr += String(char)
+        }
+        return newStr
+    }
+     
+    //revise char one by one and
+    // check revised word == endword
+    //check revised word be in wordlist: if Y, add in array, N continue.
+    while (!queue.isEmpty) {
+        step += 1
+        var size = queue.count
+        while ((size) != 0) {
+            size -= 1
+            let str = queue.removeFirst()
+            visited.insert(str)
+            for ch in a2z {
+                let newWord = buildNewString(alphabet: ch, word: str, index: 0)
+                if endWord == newWord { return step }
+                if wordList.contains(newWord) {queue.append(newWord)}
+            }
+        }
+    }
     return 0
 }
+ladderLength("hit", "cog", ["hot","dot","dog","lot","log","cog"])
 
 //279. Perfect Squares
 //Input: n = 12
