@@ -1,6 +1,15 @@
 import UIKit
 import Darwin
 
+//300. Longest Increasing Subsequence
+//Input: nums = [10,9,2,5,3,7,101,18]
+//Output: 4
+func lengthOfLIS(_ nums: [Int]) -> Int {
+    
+}
+
+
+
 //91. Decode Ways
 //Input: s = "12"
 //Output: 2
@@ -18,7 +27,7 @@ func numDecodings(_ s: String) -> Int {
     }
     return memo.last!
 }
-numDecodings("226")
+
 //303. Range Sum Query
 //Input:["NumArray", "sumRange", "sumRange", "sumRange"],[[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
 //Output: [null, 1, -1, -3]
@@ -27,6 +36,18 @@ numDecodings("226")
 //279. Perfect Squares
 //Input: n = 12
 //Output: 3
+func numSquares(_ n: Int) -> Int {
+    var dp = Array(repeating: Int.max, count: n+1)
+    dp[0] = 0
+    for i in 1...n {
+        var j = 1
+        while j*j <= i {
+            dp[i] = min(dp[i], dp[i-j*j]+1)
+            j += 1
+        }
+    }
+    return dp[n]
+}
 
 //343. Integer Break
 //Input: n = 2
@@ -204,3 +225,6 @@ func calculateMinimumHP(_ dungeon: [[Int]]) -> Int {
     }
     return memo[0][0]
 }
+
+//343. Integer Break
+
