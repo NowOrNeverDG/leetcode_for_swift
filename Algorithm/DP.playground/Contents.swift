@@ -5,10 +5,29 @@ import Darwin
 //Input: nums = [10,9,2,5,3,7,101,18]
 //Output: 4
 func lengthOfLIS(_ nums: [Int]) -> Int {
-    
-    
-}
+    var dp = Array(repeating: 0, count: nums.count)
 
+    for i in 0..<nums.count {
+        var mx = 1
+        for j in 0..<i {
+            if nums[i] > nums[j] {
+                mx = max(mx, dp[j]+1)
+                
+            }
+        }
+        dp[i] = mx
+    }
+    
+    var res = 0
+    for i in dp {
+        if res < i {
+            res = i
+        }
+    }
+    
+    return res
+}
+lengthOfLIS([10,9,2,5,3,7,101,18])
 
 
 //91. Decode Ways
