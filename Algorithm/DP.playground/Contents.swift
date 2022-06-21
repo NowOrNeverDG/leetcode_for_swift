@@ -1,5 +1,33 @@
 import UIKit
 import Darwin
+//646. Maximum Length of Pair Chain
+//Input: pairs = [[1,2],[2,3],[3,4]]
+//Output: 2
+func findLongestChain(_ pairs: [[Int]]) -> Int {
+    var dp = Array(repeating: 0, count: pairs.count)
+    var sortedPairs = pairs.sorted { x, y in
+        return x[1] < y[1]
+    }
+    
+    for i in 0..<pairs.count {
+        var mx = 1
+        for j in 0...i {
+            if sortedPairs[i][0] > sortedPairs[j][1] {
+                mx = max(mx, dp[j] + 1)
+            }
+        }
+        dp[i] = mx
+    }
+    
+    var res = 0
+    for i in dp {
+        if i > res {
+            res = i
+        }
+    }
+    return res
+}
+findLongestChain([[1,2],[7,8],[4,5]])
 
 //300. Longest Increasing Subsequence
 //Input: nums = [10,9,2,5,3,7,101,18]
@@ -10,19 +38,14 @@ func lengthOfLIS(_ nums: [Int]) -> Int {
     for i in 0..<nums.count {
         var mx = 1
         for j in 0..<i {
-            if nums[i] > nums[j] {
-                mx = max(mx, dp[j]+1)
-                
-            }
+            if nums[i] > nums[j] { mx = max(mx, dp[j]+1) }
         }
         dp[i] = mx
     }
     
     var res = 0
     for i in dp {
-        if res < i {
-            res = i
-        }
+        if res < i { res = i }
     }
     
     return res
