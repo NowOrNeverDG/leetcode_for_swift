@@ -1,5 +1,23 @@
 import UIKit
 import Darwin
+//376. Wiggle Subsequence
+//Input: nums = [1,7,4,9,2,5]
+//Output: 6
+func wiggleMaxLength(_ nums: [Int]) -> Int {
+    var up = 1
+    var down = 1
+    for i in 1..<nums.count {
+        if nums[i] > nums[i-1] {
+            up = down + 1
+        }
+        else if nums[i] < nums[i-1] {
+            down = up + 1
+        }
+    }
+    
+    return max(up, down)
+}
+
 //646. Maximum Length of Pair Chain
 //Input: pairs = [[1,2],[2,3],[3,4]]
 //Output: 2
