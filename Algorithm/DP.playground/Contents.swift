@@ -14,7 +14,6 @@ func wiggleMaxLength(_ nums: [Int]) -> Int {
             down = up + 1
         }
     }
-    
     return max(up, down)
 }
 
