@@ -1,21 +1,58 @@
 import UIKit
 import Darwin
+//1143. Longest Common Subsequence
+//Input: text1 = "abcde", text2 = "ace"
+//Output: 3
+func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
+    var longPo = 0
+    var shortPo = 0
+    var result = 0
+    var short:[Character] = []
+    var long:[Character] = []
+    if text1.count >= text2.count {
+        long = Array(text1)
+        short = Array(text2)
+    } else {
+        long = Array(text2)
+        short = Array(text1)
+    }
+    
+    while longPo < long.count && shortPo < short.count  {
+        if long[longPo] == short[longPo] {
+            longPo += 1
+            shortPo += 1
+            result += 1
+        } else {
+            longPo += 1
+        }
+    }
+    return result
+}
+longestCommonSubsequence("abcde", "ace")
+
 //376. Wiggle Subsequence
 //Input: nums = [1,7,4,9,2,5]
 //Output: 6
 func wiggleMaxLength(_ nums: [Int]) -> Int {
-    var up = 1
-    var down = 1
-    for i in 1..<nums.count {
-        if nums[i] > nums[i-1] {
-            up = down + 1
+    
+    func caculator(nums:[Int], isUp:Bool) -> Int {
+        var isUp = isUp
+        var result = 1
+        for i in 0..<nums.count-1 {
+            if isUp && nums[i] > nums[i+1] {
+                isUp = false
+                result += 1
+            } else if !isUp && nums[i] < nums[i+1] {
+                isUp = true
+                result += 1
+            }
         }
-        else if nums[i] < nums[i-1] {
-            down = up + 1
-        }
+        return result
     }
-    return max(up, down)
+    return max(caculator(nums: nums, isUp: false), caculator(nums: nums, isUp: true))
 }
+
+wiggleMaxLength([1,2,3,4,5,6,7,8,9])
 
 //646. Maximum Length of Pair Chain
 //Input: pairs = [[1,2],[2,3],[3,4]]
