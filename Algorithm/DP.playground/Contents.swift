@@ -4,7 +4,15 @@ import Darwin
 //Input: text1 = "abcde", text2 = "ace"
 //Output: 3
 func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
-    var dp = Array(repeating: 0, count: <#T##Int#>)
+    var n1 = text1.count
+    var n2 = text2.count
+    var dp = Array(repeating: Array(repeating: 0, count: n2+1), count: n1+1)
+    for i in 1...n1 {
+        for j in 1...n2 {
+            
+        }
+    }
+    
 }
 longestCommonSubsequence("abcde", "ace")
 
