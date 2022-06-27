@@ -4,29 +4,7 @@ import Darwin
 //Input: text1 = "abcde", text2 = "ace"
 //Output: 3
 func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
-    var longPo = 0
-    var shortPo = 0
-    var result = 0
-    var short:[Character] = []
-    var long:[Character] = []
-    if text1.count >= text2.count {
-        long = Array(text1)
-        short = Array(text2)
-    } else {
-        long = Array(text2)
-        short = Array(text1)
-    }
-    
-    while longPo < long.count && shortPo < short.count  {
-        if long[longPo] == short[longPo] {
-            longPo += 1
-            shortPo += 1
-            result += 1
-        } else {
-            longPo += 1
-        }
-    }
-    return result
+    var dp = Array(repeating: 0, count: <#T##Int#>)
 }
 longestCommonSubsequence("abcde", "ace")
 
