@@ -1,20 +1,33 @@
 import UIKit
 import Darwin
+//416. Partition Equal Subset Sum
+//Input: nums = [1,5,11,5]
+//Output: true
+func canPartition(_ nums: [Int]) -> Bool {
+    
+}
+
 //1143. Longest Common Subsequence
 //Input: text1 = "abcde", text2 = "ace"
 //Output: 3
 func longestCommonSubsequence(_ text1: String, _ text2: String) -> Int {
-    var n1 = text1.count
-    var n2 = text2.count
+    let n1 = text1.count
+    let n2 = text2.count
     var dp = Array(repeating: Array(repeating: 0, count: n2+1), count: n1+1)
+    let text1Arr:[Character] = Array(text1)
+    let text2Arr:[Character] = Array(text2)
+    
     for i in 1...n1 {
         for j in 1...n2 {
-            
+            if (text1Arr[i-1] == text2Arr[j-1]) {
+                dp[i][j] = dp[i-1][j-1] + 1
+            } else {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+            }
         }
     }
-    
+    return dp[n1][n2]
 }
-longestCommonSubsequence("abcde", "ace")
 
 //376. Wiggle Subsequence
 //Input: nums = [1,7,4,9,2,5]
