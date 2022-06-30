@@ -1,10 +1,33 @@
 import UIKit
 import Darwin
+//494. Target Sum
+//Input: nums = [1,1,1,1,1], target = 3
+//Output: 5
+func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
+    
+}
+
+
+
 //416. Partition Equal Subset Sum
 //Input: nums = [1,5,11,5]
 //Output: true
 func canPartition(_ nums: [Int]) -> Bool {
+    var total = 0
+    for i in nums {
+        total += i
+    }
     
+    if total % 2 != 0 {return false}
+    total = total/2
+    var dp = Array(repeating: true, count: nums.count+1)
+    dp[0] = true
+    
+    for i in nums {
+        for j in total...0 {
+            dp[i] = dp[i] - dp[j - i]
+        }
+    }
 }
 
 //1143. Longest Common Subsequence
