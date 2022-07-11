@@ -5,7 +5,7 @@ import Darwin
 //Output: 5
 func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
     
-    
+    return 0
 }
 
 
@@ -21,11 +21,21 @@ func canPartition(_ nums: [Int]) -> Bool {
     if total % 2 != 0 {return false}
     
     total = total/2
-    
-    dp[0] = true
-    
-    
+    var count = nums.count
+    var dp = Array(repeating: 0, count: total+1)
+    dp[0] = 0
+    for i in 0..<count {
+        for j in (1...total).reversed() {
+            print(i)
+            print(j)
+            if j >= nums[i] {
+                dp[j] = max(dp[j], dp[j-nums[i]]+nums[i])
+            }
+        }
+    }
+    return dp.last == total ? true : false
 }
+canPartition([1,5,11,5])
 
 //1143. Longest Common Subsequence
 //Input: text1 = "abcde", text2 = "ace"
