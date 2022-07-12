@@ -4,10 +4,38 @@ import Darwin
 //Input: nums = [1,1,1,1,1], target = 3
 //Output: 5
 func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
+    var total = 0
+    for i in nums {
+        total += i
+    }
+    if total >= abs(target) { return 0}
     
-    return 0
+    var count = nums.count
+    var dp = Array(repeating: false, count: count*2+1)
+    var result = 0
+    for i in 0..<count {
+        for j in (0..<count*2+1).reversed() {
+            if i == 0 {
+                if abs(j - total) == nums[i] { dp[j] == true }
+            } else {
+                if dp[j] == true {
+                    if j < count*2 - nums[i] && j > nums[i] {
+                        dp[j] = (dp[j - nums[i]] || dp[j + nums[i]])
+                    } else if j <= count*2 - nums[i] {
+                        dp[j] = dp[j + nums[i]]
+                    } else if j >= nums[i] {
+                        dp[j] = dp[j - nums[i]]
+                    } else {
+                        dp[j] == false
+                    }
+                }
+            }
+            if j == count*2 && dp[j] == true {result += 1}
+        }
+    }
+    return result
 }
-
+findTargetSumWays([1,1,1,1,1], 3)
 
 
 //416. Partition Equal Subset Sum
