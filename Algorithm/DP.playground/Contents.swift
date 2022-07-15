@@ -11,26 +11,12 @@ func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
     if total >= abs(target) { return 0}
     
     var count = nums.count
-    var dp = Array(repeating: false, count: count*2+1)
+    var dp = Array(repeating: 0, count: total*2+1)
+    
     var result = 0
     for i in 0..<count {
-        for j in (0..<count*2+1).reversed() {
-            if i == 0 {
-                if abs(j - total) == nums[i] { dp[j] == true }
-            } else {
-                if dp[j] == true {
-                    if j < count*2 - nums[i] && j > nums[i] {
-                        dp[j] = (dp[j - nums[i]] || dp[j + nums[i]])
-                    } else if j <= count*2 - nums[i] {
-                        dp[j] = dp[j + nums[i]]
-                    } else if j >= nums[i] {
-                        dp[j] = dp[j - nums[i]]
-                    } else {
-                        dp[j] == false
-                    }
-                }
-            }
-            if j == count*2 && dp[j] == true {result += 1}
+        for j in (0...total*2) {
+            
         }
     }
     return result
