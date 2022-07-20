@@ -1,5 +1,28 @@
 import UIKit
 import Darwin
+//474. Ones and Zeroes
+//Input: strs = ["10","0001","111001","1","0"], m = 5, n = 3
+//Output: 4
+func findMaxForm(_ strs: [String], _ m: Int, _ n: Int) -> Int {
+    if strs.count == 0 { return 0 }
+    
+    var dp = Array(repeating: Array(repeating: m+1, count: strs.count), count: n+1)
+    
+    for str in strs {
+        var one = 1
+        var zero = 0
+        for char in str {
+            if char == "0" {
+                zero += 1
+            } else {
+                one += 1
+            }
+        }
+        
+        for 
+    }
+    
+}
 //494. Target Sum
 //Input: nums = [1,1,1,1,1], target = 3
 //Output: 5
@@ -8,11 +31,10 @@ func findTargetSumWays(_ nums: [Int], _ target: Int) -> Int {
     for i in nums {
         total += i
     }
-    if total >= abs(target) { return 0}
+    if total >= abs(target) { return 0 }
     
     var count = nums.count
     var dp = Array(repeating: 0, count: total*2+1)
-    
     var result = 0
     for i in 0..<count {
         for j in (0...total*2) {
