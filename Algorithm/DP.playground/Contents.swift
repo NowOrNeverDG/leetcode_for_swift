@@ -4,25 +4,31 @@ import Darwin
 //Input: strs = ["10","0001","111001","1","0"], m = 5, n = 3
 //Output: 4
 func findMaxForm(_ strs: [String], _ m: Int, _ n: Int) -> Int {
-    if strs.count == 0 { return 0 }
+    let length = strs.count
+    if length == 0 { return 0 }
     
-    var dp = Array(repeating: Array(repeating: m+1, count: strs.count), count: n+1)
+    var dp = Array(repeating: Array(repeating: 0, count: n+1), count: m+1)
     
-    for str in strs {
-        var one = 1
-        var zero = 0
-        for char in str {
-            if char == "0" {
-                zero += 1
-            } else {
-                one += 1
+    for word in strs {
+        let zeros = word.filter { char in
+            char == "0"
+        }.count
+        let ones = word.filter { char in
+            char == "1"
+        }.count
+        
+        for i in (0..<m+1).reversed() {
+            for j in (0..<n+1).reversed() {
+                if i >= zeros && j >= ones {//[1,1]
+                    dp[i][j] = max(dp[i][j], dp[i-zeros][j-ones]+1)
+                }
             }
         }
-        
-        for 
     }
-    
+    return dp[m][n]
 }
+findMaxForm(["10","0001","111001","1","0"], 5, 3)
+
 //494. Target Sum
 //Input: nums = [1,1,1,1,1], target = 3
 //Output: 5
