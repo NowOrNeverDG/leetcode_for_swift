@@ -1,5 +1,27 @@
 import UIKit
 import Darwin
+//518. Coin Change 2
+
+//322. Coin Change
+//Input: coins = [1,2,5], amount = 11
+//Output: 3
+func coinChange(_ coins: [Int], _ amount: Int) -> Int {
+    if coins.count == 0 || amount == 0 {return 0}
+    var dp = Array(repeating: amount+1, count: amount+1)
+    
+    for coin in coins {
+        for i in (coin...amount) {
+            if i == coin { dp[i] = 1 }
+            else if i > coin {
+                dp[i] = min(dp[i], dp[i-coin]+1)
+            }
+        }
+    }
+    
+    return dp[amount] == amount+1 ? -1 : dp[amount]
+}
+coinChange([1], 0)
+
 //474. Ones and Zeroes
 //Input: strs = ["10","0001","111001","1","0"], m = 5, n = 3
 //Output: 4
