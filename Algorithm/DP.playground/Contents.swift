@@ -9,6 +9,7 @@ func change(_ amount: Int, _ coins: [Int]) -> Int {
     var dp = Array(repeating: 0, count: amount+1)
     
     for coin in coins {
+        if coin > amount {continue}
         for i in (coin...amount) {
             if i == coin {
                 dp[i] = dp[i]+1
@@ -19,7 +20,6 @@ func change(_ amount: Int, _ coins: [Int]) -> Int {
     }
     return dp[amount]
 }
-change(5, [1,2,5])
 
 //322. Coin Change
 //Input: coins = [1,2,5], amount = 11
