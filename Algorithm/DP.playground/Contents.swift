@@ -1,6 +1,25 @@
 import UIKit
 import Darwin
 //518. Coin Change 2
+//Input: amount = 5, coins = [1,2,5]
+//Output: 4
+func change(_ amount: Int, _ coins: [Int]) -> Int {
+    if amount == 0 || coins.count == 0 {return 0}
+    
+    var dp = Array(repeating: 0, count: amount+1)
+    
+    for coin in coins {
+        for i in (coin...amount) {
+            if i == coin {
+                dp[i] = dp[i]+1
+            } else if i > coin {
+                dp[i] = dp[i] + dp[i-coin]
+            }
+        }
+    }
+    return dp[amount]
+}
+change(5, [1,2,5])
 
 //322. Coin Change
 //Input: coins = [1,2,5], amount = 11
