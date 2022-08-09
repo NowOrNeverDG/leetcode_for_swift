@@ -1,5 +1,91 @@
 import UIKit
 import Darwin
+//714. Best Time to Buy and Sell Stock with Transaction Fee
+//Input: prices = [1,3,2,8,4,9], fee = 2
+//Output: 8
+func maxProfit(_ prices: [Int], _ fee: Int) -> Int {
+    let len = prices.count
+    
+    var dp = Array(repeating: Array(repeating: 0, count: 2), count: len+1)
+    
+    dp[0][0] = 0
+    dp[0][1] = Int.min
+    dp[1][0] = 0
+    dp[1][1] = -prices[0]
+    
+    guard len > 1 else { return 0 }
+    for i in 2...len {
+        dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i-1]-fee)
+        dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i-1])
+    }
+    return dp[len][0]
+}
+
+
+//309. Best Time to Buy and Sell Stock with Cooldown
+//Input: prices = [1,2,3,0,2]
+//Output: 3
+func maxProfit(_ prices: [Int]) -> Int {
+    let len = prices.count
+    var dp = Array(repeating: Array(repeating: 0, count: 2), count: len+1)
+    
+    dp[0][0] = 0
+    dp[0][1] = Int.min
+    dp[1][0] = 0
+    dp[1][1] = dp[0][0]-prices[0]
+    guard len > 2 else {return dp[1][0]}
+    
+    for i in 2...len {
+        dp[i][1] = max(dp[i-1][1], dp[i-2][0]-prices[i-1])
+        dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i-1])
+    }
+    print(dp)
+    return dp[len][0]
+}
+maxProfit([1,2,3,0,2])
+
+//377. Combination Sum IV
+//Input: nums = [1,2,3], target = 4
+//Output: 7
+//https://developer.apple.com/documentation/swift/int/&+=(_:_:)
+func combinationSum4(_ nums: [Int], _ target: Int) -> Int {
+    let len = nums.count
+    var dp = Array(repeating: 0, count: target+1)
+    dp[0] = 1
+    for i in 1...target {
+        for j in 0..<len {
+            guard nums[j] <= i else { continue }
+            
+            dp[i] &+= dp[i - nums[j]]
+        }
+    }
+     return Int(dp[target])
+}
+
+
+
+
+//139. Word Break？
+//Input: s = "leetcode", wordDict = ["leet","code"]
+//Output: true
+func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+    let len = s.count
+    var dp = Array(repeating: false, count: len+1)
+    
+    for i in 1...len {
+        for j in 0..<wordDict.count {
+            let start = s.index(s.startIndex, offsetBy: i)
+            let end = s.index(s.startIndex, offsetBy: i + wordDict[j].count)
+            if wordDict[j].count <= i && wordDict[j] == s[start..<end] {
+                dp[i] = dp[i] || dp[i-wordDict[j].count]
+            }
+        }
+    }
+    return dp[len]
+}
+wordBreak("leetcode", ["leet","code"])
+
+
 //518. Coin Change 2
 //Input: amount = 5, coins = [1,2,5]
 //Output: 4
