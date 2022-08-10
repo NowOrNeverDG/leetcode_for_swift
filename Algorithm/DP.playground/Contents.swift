@@ -1,30 +1,73 @@
 import UIKit
-import Darwin
-
-
-
-
-
-//123. Best Time to Buy and Sell Stock III
-//Input: prices = [3,3,5,0,0,3,1,4]
-//Output: 6
+import Darwin//123 139
+//122. Best Time to Buy and Sell Stock II
+//Input: prices = [7,1,5,3,6,4]
+//Output: 7
 func maxProfit10(_ prices: [Int]) -> Int {
     let len = prices.count
     
-    var dp = Array(repeating: Array(repeating: Array(repeating: Int.min, count: 2), count: 3), count: len+1)
+    var dp = Array(repeating: Array(repeating: 0, count: 2), count: len+1)
     
-    for i in 0...2 {
-        dp[0][i][0] = 0
-    }
+    dp[0][0] = 0
+    dp[0][1] = Int.min
+    
     for i in 1...len {
-        for nk in 1...2 {
+        dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i-1])
+        dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i-1])
+    }
+    return dp[len][0]
+}
+maxProfit10([7,1,5,3,6,4])
+
+
+//188. Best Time to Buy and Sell Stock IV
+//Input: k = 2, prices = [2,4,1]
+//Output: 2
+func maxProfit10(_ k: Int, _ prices: [Int]) -> Int {
+    let len = prices.count
+    guard len > 1 && k > 0 else {return 0}
+
+    var dp = Array(repeating: Array(repeating: Array(repeating: 0, count: 2), count: k+1), count: len+1)
+    
+    for nk in 0...k {
+        dp[0][nk][0] = 0
+        dp[0][nk][1] = Int.min
+    }
+    
+    for i in 1...len {
+        for nk in 1...k {
             dp[i][nk][0] = max(dp[i-1][nk][0], dp[i-1][nk-1][1]+prices[i-1])
             dp[i][nk][1] = max(dp[i-1][nk][1], dp[i-1][nk][0]-prices[i-1])
         }
     }
+    return dp[len][k][0]
+}
+
+
+
+//123. Best Time to Buy and Sell Stock III？
+//Input: prices = [3,3,5,0,0,3,1,4]
+//Output: 6
+func maxProfit(_ prices: [Int]) -> Int {
+    let len = prices.count
+    
+    var dp = Array(repeating: Array(repeating: Array(repeating: 0, count: 2), count: 3), count: len+1)
+    
+
+    for nk in 0...2 {
+        dp[0][nk][0] = 0
+        dp[0][nk][1] = Int.min
+    }
+    for i in 1...len {
+        for nk in 1...2 {
+            dp[i][nk][0] = max(dp[i-1][nk][0], dp[i-1][nk][1]+prices[i-1])
+            dp[i][nk][1] = max(dp[i-1][nk][1], dp[i-1][nk-1][0]-prices[i-1])
+        }
+    }
     return dp[len][2][0]
 }
-maxProfit10([3,3,5,0,0,3,1,4])
+
+
 //714. Best Time to Buy and Sell Stock with Transaction Fee
 //Input: prices = [1,3,2,8,4,9], fee = 2
 //Output: 8
