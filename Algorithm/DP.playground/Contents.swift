@@ -4,7 +4,16 @@ import Darwin//123 139
 //Input: word1 = "sea", word2 = "eat"
 //Output: 2
 func minDistance(_ word1: String, _ word2: String) -> Int {
+    let m = word1.count
+    let n = word2.count
     
+    var dp = Array(repeating: Array(repeating: 0, count: n), count: m)
+    
+    for i in 0..<m {
+        for j in 0..<n {
+            dp[i][j] = dp[]
+        }
+    }
 }
 //122. Best Time to Buy and Sell Stock II
 //Input: prices = [7,1,5,3,6,4]
