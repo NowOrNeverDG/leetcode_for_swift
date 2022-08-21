@@ -1,19 +1,32 @@
 import UIKit
 import Darwin//123 139
+//72. Edit Distance
+//Input: word1 = "horse", word2 = "ros"
+//Output: 3
+func minDistance(_ word1: String, _ word2: String) -> Int {
+ 
+}
 //583. Delete Operation for Two Strings
 //Input: word1 = "sea", word2 = "eat"
 //Output: 2
-func minDistance(_ word1: String, _ word2: String) -> Int {
+func minDistance583(_ word1: String, _ word2: String) -> Int {
     let m = word1.count
     let n = word2.count
+    let word1Arr = Array(word1)
+    let word2Arr = Array(word2)
+    var dp = Array(repeating: Array(repeating: 0, count: n+1), count: m+1)
     
-    var dp = Array(repeating: Array(repeating: 0, count: n), count: m)
-    
-    for i in 0..<m {
-        for j in 0..<n {
-            dp[i][j] = dp[]
+    for i in 1...m {
+        for j in 1...n {
+            if word2Arr[j-1] != word1Arr[i-1] {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+            } else {
+                dp[i][j] = dp[i-1][j-1]+1
+            }
         }
     }
+    let shortest = dp[m][n]
+    return (m-shortest) + (n-shortest)
 }
 //122. Best Time to Buy and Sell Stock II
 //Input: prices = [7,1,5,3,6,4]
