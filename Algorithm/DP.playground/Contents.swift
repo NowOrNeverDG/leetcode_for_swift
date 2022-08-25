@@ -1,11 +1,29 @@
 import UIKit
 import Darwin//123 139
+//650. 2 Keys Keyboard
+//Input: n = 3
+//Output: 3
+func minSteps(_ n: Int) -> Int {
+    if n == 0 { return 0 }
+    var dp = Array(repeating: 0, count: n+1)
+    
+    for i in 1...n {
+        dp[i] = i
+        for j in 1...i {
+            dp[i] = min(dp[i], dp[j]+dp[i-j])
+        }
+    }
+    return dp[n]
+}
+minSteps(3)
+
 //72. Edit Distance
 //Input: word1 = "horse", word2 = "ros"
 //Output: 3
 func minDistance(_ word1: String, _ word2: String) -> Int {
- 
+    
 }
+
 //583. Delete Operation for Two Strings
 //Input: word1 = "sea", word2 = "eat"
 //Output: 2
