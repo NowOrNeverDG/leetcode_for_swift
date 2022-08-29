@@ -19,15 +19,15 @@ func minSteps(_ n: Int) -> Int {
     return dp[n]
 }
 
-
-
 //72. Edit Distance
 //Input: word1 = "horse", word2 = "ros"
 //Output: 3
 func minDistance(_ word1: String, _ word2: String) -> Int {
-    
     let m = word1.count
     let n = word2.count
+    if m == 0 { return n }
+    if n == 0 { return m }
+    
     let word1Arr = Array(word1)
     let word2Arr = Array(word2)
     var dp = Array(repeating: Array(repeating: Int.max, count: n+1), count: m+1)
@@ -35,17 +35,18 @@ func minDistance(_ word1: String, _ word2: String) -> Int {
     for i in 0...m {dp[i][0] = i}
     for i in 0...n {dp[0][i] = i}
     
-    for i in 0...m {
-        for j in 0...n {
-            if word1Arr[i] == word2Arr[j] {
+    for i in 1...m {
+        for j in 1...n {
+            if word1Arr[i-1] == word2Arr[j-1] {
                 dp[i][j] = dp[i-1][j-1]
             } else {
-                
+                dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
             }
         }
     }
-    
+    return dp[m][n]
 }
+minDistance("horse", "ros")
 
 //583. Delete Operation for Two Strings
 //Input: word1 = "sea", word2 = "eat"
