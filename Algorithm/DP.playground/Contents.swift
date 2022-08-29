@@ -6,21 +6,44 @@ import Darwin//123 139
 func minSteps(_ n: Int) -> Int {
     if n == 0 { return 0 }
     var dp = Array(repeating: 0, count: n+1)
-    
-    for i in 1...n {
+    let base = Int(sqrt(Double(n)))
+    for i in 2...n {
         dp[i] = i
-        for j in 1...i {
-            dp[i] = min(dp[i], dp[j]+dp[i-j])
+        for j in 2...base {
+            if i % j == 0 {
+                dp[i] = dp[j] + dp[i/j]
+                break
+            }
         }
     }
     return dp[n]
 }
-minSteps(3)
+
+
 
 //72. Edit Distance
 //Input: word1 = "horse", word2 = "ros"
 //Output: 3
 func minDistance(_ word1: String, _ word2: String) -> Int {
+    
+    let m = word1.count
+    let n = word2.count
+    let word1Arr = Array(word1)
+    let word2Arr = Array(word2)
+    var dp = Array(repeating: Array(repeating: Int.max, count: n+1), count: m+1)
+    
+    for i in 0...m {dp[i][0] = i}
+    for i in 0...n {dp[0][i] = i}
+    
+    for i in 0...m {
+        for j in 0...n {
+            if word1Arr[i] == word2Arr[j] {
+                dp[i][j] = dp[i-1][j-1]
+            } else {
+                
+            }
+        }
+    }
     
 }
 
