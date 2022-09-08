@@ -1,5 +1,22 @@
 import UIKit
 import Darwin//123 139
+//931. Minimum Falling Path Sum
+//Input: matrix = [[-19,57],[-40,-5]]
+//Output: -59
+func minFallingPathSum(_ matrix: [[Int]]) -> Int {
+    let m = matrix.count
+    let n = matrix[0].count
+    
+    var dp = Array(repeating: Array(repeating: 0, count: n), count: m+1)
+    
+    for i in 1..<m {
+        for j in 1..<n {
+            if 
+            dp[i][j] = min(dp[i][j], <#T##y: Comparable##Comparable#>)
+        }
+    }
+}
+
 //650. 2 Keys Keyboard
 //Input: n = 3
 //Output: 3
@@ -18,6 +35,7 @@ func minSteps(_ n: Int) -> Int {
     }
     return dp[n]
 }
+
 
 //72. Edit Distance
 //Input: word1 = "horse", word2 = "ros"
@@ -533,17 +551,17 @@ func climbStairs(_ n: Int) -> Int {
 //Input: nums = [1,2,3,1]
 //Output: 4
 func rob(_ nums: [Int]) -> Int {
-    let n = nums.count
-    if nums.count == 1 {return nums[0]}
-    if nums.count == 2 {return max(nums[0], nums[1])}
-    var memo = Array(repeating: 0, count: n)
-    memo[0] = nums[0]
-    memo[1] = max(nums[0], nums[1])
-    for i in 2..<n {
-        memo[i] = max(memo[i-1], memo[i-2]+nums[i])
-    }
-    print(memo)
-    return memo.last!
+   let n = nums.count
+   if n < 1 { return 0 }
+   var dp = Array(repeating: 0, count: n+1)
+
+   for i in 1..<n+1 {
+       if i == 1 { dp[i] = nums[0]}
+       else {
+           dp[i] = max(dp[i-1],dp[i-2]+nums[i-1])
+       }
+   }
+   return dp[n]
 }
 
 //213. House Robber II
@@ -551,51 +569,47 @@ func rob(_ nums: [Int]) -> Int {
 //Output: 3
 func rob2(_ nums: [Int]) -> Int {
     let n = nums.count
-    if nums.count == 1 {return nums[0]}
-    if nums.count == 2 {return max(nums[0], nums[1])}
-    if nums.count == 3 {return max(nums[0], nums[1],nums[2])}
-    var memo1 = Array(repeating: 0, count: n-1)
-    memo1[0] = nums[1]
-    memo1[1] = max(nums[1], nums[2])
-    var memo2 = Array(repeating: 0, count: n-1)
-    memo2[0] = nums[0]
-    memo2[1] = max(nums[0], nums[1])
-    
-    for i in 2..<n-1 {
-        memo1[i] = max(memo1[i-1], memo1[i-2] + nums[i+1])
-        memo2[i] = max(memo2[i-1], memo2[i-2] + nums[i])
+    if n ==  0 {
+        return 0
+    } else if n == 1 {
+        return nums[0]
     }
-    return max(memo1.last!, memo2.last!)
+    
+    var dp1 = Array(repeating: 0, count: n)
+    var dp2 = Array(repeating: 0, count: n)
+    for i in 1..<n {
+        if i == 1 {
+            dp1[1] = nums[0]
+            dp2[1] = nums[1]
+        } else {
+            dp1[i] = max(dp1[i-1], dp1[i-2]+nums[i-1])
+            dp2[i] = max(dp2[i-1], dp2[i-2]+nums[i])
+        }
+    }
+    return max(dp1[n-1],dp2[n-1])
 }
 
-/// GRID
 //64. Minimum Path Sum
 //Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
 //Output: 7
 func minPathSum(_ grid: [[Int]]) -> Int {
-    let rows = grid.count
-    let columns = grid[0].count
-    var memo = Array(repeating: Array(repeating: 0, count: grid[0].count), count: grid.count)
-
-    for i in (0..<rows).reversed() {
-        for j in (0..<columns).reversed() {
-            if i == rows-1 && j == columns-1 {
-                memo[i][j] = grid[i][j]
-                continue
-            }
-            else if i == rows - 1 {
-                memo[i][j] = grid[i][j] + memo[i][j+1]
-            }
-            else if j == columns - 1 {
-                memo[i][j] = grid[i][j] + memo[i+1][j]
+    let m = grid.count
+    let n = grid[0].count
+    
+    var dp = Array(repeating: Array(repeating: 0, count: n+1), count: m+1)
+    for i in 1...m {
+        for j in 1...n {
+            if i == 1 {
+                dp[i][j] = dp[i][j-1] + grid[i-1][j-1]
+            }else if j == 1 {
+                dp[i][j] = dp[i-1][j] + grid[i-1][j-1]
             } else {
-                memo[i][j] = grid[i][j] + min(memo[i+1][j], memo[i][j+1])
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i-1][j-1]
             }
         }
     }
-    return memo[0][0]
+    return dp[m][n]
 }
-minPathSum([[1,3,1],[1,5,1],[4,2,1]])
 
 //62. Unique Paths
 //Input: m = 3, n = 7
