@@ -1,20 +1,45 @@
 import UIKit
 import Darwin//123 139
+//1289. Minimum Falling Path Sum II
+//Input: arr = [[1,2,3],[4,5,6],[7,8,9]]
+//Output: 13
+func minFallingPathSum(_ grid: [[Int]]) -> Int {
+    
+}
 //931. Minimum Falling Path Sum
 //Input: matrix = [[-19,57],[-40,-5]]
 //Output: -59
-func minFallingPathSum(_ matrix: [[Int]]) -> Int {
+func minFallingPathSum1(_ matrix: [[Int]]) -> Int {
     let m = matrix.count
     let n = matrix[0].count
     
     var dp = Array(repeating: Array(repeating: 0, count: n), count: m+1)
     
-    for i in 1..<m {
-        for j in 1..<n {
-            if 
-            dp[i][j] = min(dp[i][j], <#T##y: Comparable##Comparable#>)
+    if m == 1 {
+        var result = Int.max
+        for i in 0..<n {
+            if dp[0][i] < result { result = matrix[0][i] }
+        }
+        return result
+    }
+    
+    for i in 1...m {
+        for j in 0..<n {
+            if j == 0 {
+                dp[i][j] = min(dp[i-1][j], dp[i-1][j+1]) + matrix[i-1][j]
+            } else if j == n-1 {
+                dp[i][j] = min(dp[i-1][j], dp[i-1][j-1]) + matrix[i-1][j]
+            } else {
+                dp[i][j] = min(dp[i-1][j], dp[i-1][j-1], dp[i-1][j+1]) + matrix[i-1][j]
+            }
         }
     }
+    
+    var result = Int.max
+    for i in 0..<n {
+        if dp[m][i] < result { result = dp[m][i] }
+    }
+    return result
 }
 
 //650. 2 Keys Keyboard
@@ -181,7 +206,7 @@ func maxProfit(_ prices: [Int], _ fee: Int) -> Int {
 //309. Best Time to Buy and Sell Stock with Cooldown
 //Input: prices = [1,2,3,0,2]
 //Output: 3
-func maxProfit(_ prices: [Int]) -> Int {
+func maxProfit1(_ prices: [Int]) -> Int {
     let len = prices.count
     var dp = Array(repeating: Array(repeating: 0, count: 2), count: len+1)
     
