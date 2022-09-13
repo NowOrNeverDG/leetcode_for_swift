@@ -1,6 +1,20 @@
 import UIKit
 import Foundation
 import Darwin
+
+func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
+    let m = grid.count
+    let directions = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[-1,-1],[1,-1],[-1,1]]
+    
+    func dfs(directions: [[Int]], grid:[[Int]], row: Int, column: Int, count: Int) {
+        if row < 0 && column >= m && row >= m && column < 0 grid[row][column] == 1 { return }
+        for dir in directions {
+            dfs(directions: directions, grid: grid, row: row + dir[0], column: column + dir[1], count: count+1)
+        }
+    }
+    
+}
+
 //815. Bus Routes
 //Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
 //Output: 2
@@ -137,7 +151,6 @@ func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
                 visited[nextRow][nextCol] = true
             }
         }
-        
         path += 1
     }
     return -1

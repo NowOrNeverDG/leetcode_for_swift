@@ -4,30 +4,43 @@ import Darwin//123 139
 //Input: arr = [[1,2,3],[4,5,6],[7,8,9]]
 //Output: 13
 func minFallingPathSum(_ grid: [[Int]]) -> Int {
-    
+    let m = grid.count
+    var dp = Array(repeating: Array(repeating: Int.max, count: m), count: m+1)
+    for i in 0..<m {
+        dp[0][i] = 0
+    }
+    if m == 1 { return grid[0][0] }
+    for i in 1...m {
+        for j in 0..<m {
+            for k in 0..<m {
+                if j == k {continue}
+                dp[i][j] = min(dp[i][j], dp[i-1][k])
+            }
+            dp[i][j] += grid[i-1][j]
+        }
+    }
+    var result = Int.max
+    for i in 0..<m {
+        result = min(result, dp[m][i])
+    }
+    return result
 }
+
 //931. Minimum Falling Path Sum
 //Input: matrix = [[-19,57],[-40,-5]]
 //Output: -59
 func minFallingPathSum1(_ matrix: [[Int]]) -> Int {
     let m = matrix.count
-    let n = matrix[0].count
     
-    var dp = Array(repeating: Array(repeating: 0, count: n), count: m+1)
+    var dp = Array(repeating: Array(repeating: 0, count: m), count: m+1)
     
-    if m == 1 {
-        var result = Int.max
-        for i in 0..<n {
-            if dp[0][i] < result { result = matrix[0][i] }
-        }
-        return result
-    }
+    if m == 1 { return matrix[0][0] }
     
     for i in 1...m {
-        for j in 0..<n {
+        for j in 0..<m {
             if j == 0 {
                 dp[i][j] = min(dp[i-1][j], dp[i-1][j+1]) + matrix[i-1][j]
-            } else if j == n-1 {
+            } else if j == m-1 {
                 dp[i][j] = min(dp[i-1][j], dp[i-1][j-1]) + matrix[i-1][j]
             } else {
                 dp[i][j] = min(dp[i-1][j], dp[i-1][j-1], dp[i-1][j+1]) + matrix[i-1][j]
@@ -36,7 +49,7 @@ func minFallingPathSum1(_ matrix: [[Int]]) -> Int {
     }
     
     var result = Int.max
-    for i in 0..<n {
+    for i in 0..<m {
         if dp[m][i] < result { result = dp[m][i] }
     }
     return result
