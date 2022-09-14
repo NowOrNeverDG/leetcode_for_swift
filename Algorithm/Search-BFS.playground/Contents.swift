@@ -2,18 +2,30 @@ import UIKit
 import Foundation
 import Darwin
 
-func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
+func shortestPathBinaryMatrix1(_ grid: [[Int]]) -> Int {
     let m = grid.count
     let directions = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[-1,-1],[1,-1],[-1,1]]
+    var visited = Array(repeating: Array(repeating: false, count: m), count: m)
     
-    func dfs(directions: [[Int]], grid:[[Int]], row: Int, column: Int, count: Int) {
-        if row < 0 && column >= m && row >= m && column < 0 grid[row][column] == 1 { return }
+    
+    func dfs(directions:[[Int]], grid:[[Int]], visited: inout [[Bool]], row: Int, column: Int) -> Int {
+        if row < 0 || column >= m || row >= m || column < 0 || grid[row][column] == 1 || visited[row][column] == true { return Int.max}
+        if row == m-1 && column == m-1 {return 1}
+        visited[row][column] = true
+        var path = Int.max
         for dir in directions {
-            dfs(directions: directions, grid: grid, row: row + dir[0], column: column + dir[1], count: count+1)
+            path = min(path, dfs(directions: directions, grid: grid,visited: &visited, row: row+dir[0], column: column+dir[1]))
         }
+        visited[row][column] = false
+        
+        if path != Int.max { return path+1 } else {return Int.max}
     }
     
+    let res = dfs(directions: directions, grid: grid, visited: &visited, row: 0, column: 0)
+    return res == Int.max ? -1 : res
 }
+print(shortestPathBinaryMatrix1([[0,0,1,0,0,0,0],[0,1,0,0,0,0,1],[0,0,1,0,1,0,0],[0,0,0,1,1,1,0],[1,0,0,1,1,0,0],[1,1,1,1,1,0,1],[0,0,1,0,0,0,0]]))
+
 
 //815. Bus Routes
 //Input: routes = [[1,2,7],[3,6,7]], source = 1, target = 6
