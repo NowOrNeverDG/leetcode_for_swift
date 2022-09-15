@@ -2,29 +2,42 @@ import UIKit
 import Foundation
 import Darwin
 
-func shortestPathBinaryMatrix1(_ grid: [[Int]]) -> Int {
-    let m = grid.count
-    let directions = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[-1,-1],[1,-1],[-1,1]]
-    var visited = Array(repeating: Array(repeating: false, count: m), count: m)
-    
-    
-    func dfs(directions:[[Int]], grid:[[Int]], visited: inout [[Bool]], row: Int, column: Int) -> Int {
-        if row < 0 || column >= m || row >= m || column < 0 || grid[row][column] == 1 || visited[row][column] == true { return Int.max}
-        if row == m-1 && column == m-1 {return 1}
-        visited[row][column] = true
-        var path = Int.max
-        for dir in directions {
-            path = min(path, dfs(directions: directions, grid: grid,visited: &visited, row: row+dir[0], column: column+dir[1]))
+func ladderLength1(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
+    if !wordList.contains(endWord) { return 0 }
+    func isOneWordDiff(begin:String, end:String) -> Bool {
+        var count = 0
+        let beginWordArr = Array(begin)
+        let endWordArr = Array(end)
+        for i in 0..<beginWord.count {
+            if beginWordArr[i] != endWordArr[i] {count+=1}
         }
-        visited[row][column] = false
-        
-        if path != Int.max { return path+1 } else {return Int.max}
+        print(count)
+        return count > 1 ? false : true
     }
     
-    let res = dfs(directions: directions, grid: grid, visited: &visited, row: 0, column: 0)
-    return res == Int.max ? -1 : res
+    var queue = [beginWord]
+    var count = 0
+    while( !queue.isEmpty ) {
+        count += 1
+        var tempQueue:[String] = []
+        print(queue)
+        for i in queue {
+            if isOneWordDiff(begin: i, end: endWord) {return count+1}
+            for j in wordList {
+                if isOneWordDiff(begin: i, end: j) {
+                    tempQueue.append(j)
+                }
+            }
+        }
+        queue = tempQueue
+    }
+    return 0
 }
-print(shortestPathBinaryMatrix1([[0,0,1,0,0,0,0],[0,1,0,0,0,0,1],[0,0,1,0,1,0,0],[0,0,0,1,1,1,0],[1,0,0,1,1,0,0],[1,1,1,1,1,0,1],[0,0,1,0,0,0,0]]))
+ladderLength1("lost", "miss", ["most","mist","miss","lost","fist","fish"])
+
+
+
+
 
 
 //815. Bus Routes
@@ -166,6 +179,29 @@ func shortestPathBinaryMatrix(_ grid: [[Int]]) -> Int {
         path += 1
     }
     return -1
+}
+
+func shortestPathBinaryMatrixDFS(_ grid: [[Int]]) -> Int {
+    let m = grid.count
+    let directions = [[0,1],[1,0],[0,-1],[-1,0],[1,1],[-1,-1],[1,-1],[-1,1]]
+    var visited = Array(repeating: Array(repeating: false, count: m), count: m)
+    
+    
+    func dfs(directions:[[Int]], grid:[[Int]], visited: inout [[Bool]], row: Int, column: Int) -> Int {
+        if row < 0 || column >= m || row >= m || column < 0 || grid[row][column] == 1 || visited[row][column] == true { return Int.max}
+        if row == m-1 && column == m-1 {return 1}
+        visited[row][column] = true
+        var path = Int.max
+        for dir in directions {
+            path = min(path, dfs(directions: directions, grid: grid,visited: &visited, row: row+dir[0], column: column+dir[1]))
+        }
+        visited[row][column] = false
+        
+        if path != Int.max { return path+1 } else {return Int.max}
+    }
+    
+    let res = dfs(directions: directions, grid: grid, visited: &visited, row: 0, column: 0)
+    return res == Int.max ? -1 : res
 }
 
 
