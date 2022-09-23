@@ -1,43 +1,60 @@
 import UIKit
 import Foundation
-import Darwin
-
-func ladderLength1(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
-    if !wordList.contains(endWord) { return 0 }
-    func isOneWordDiff(begin:String, end:String) -> Bool {
-        var count = 0
-        let beginWordArr = Array(begin)
-        let endWordArr = Array(end)
-        for i in 0..<beginWord.count {
-            if beginWordArr[i] != endWordArr[i] {count+=1}
+import Darwin//127
+//286. Walls and Gates
+//Input: rooms = [[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
+//Output: [[3,-1,0,1],[2,2,1,-1],[1,-1,2,-1],[0,-1,3,4]]
+func wallsAndGates(_ rooms: inout [[Int]]) {
+    var m = rooms.count
+    var n = rooms[0].count
+    var dirs = [[0,1],[-1,0],[1,0],[0,-1]]
+        
+    var queue = [[Int]]()
+    for i in 0..<m {
+        for j in 0..<n {
+            if rooms[i][j] == 0 { queue.append([i,j])}
         }
-        print(count)
-        return count > 1 ? false : true
     }
     
-    var queue = [beginWord]
-    var count = 0
     while( !queue.isEmpty ) {
-        count += 1
-        var tempQueue:[String] = []
-        print(queue)
-        for i in queue {
-            if isOneWordDiff(begin: i, end: endWord) {return count+1}
-            for j in wordList {
-                if isOneWordDiff(begin: i, end: j) {
-                    tempQueue.append(j)
-                }
-            }
+        let po = queue.removeFirst()
+        for dir in dirs {
+            let nxRow = po[0] + dir[0]
+            let nxColumn = po[1] + dir[1]
+            
+            if nxRow < 0 || nxRow >= m || nxColumn < 0 || nxColumn >= n || rooms[nxRow][nxColumn] != 2147483647 { continue }
+            
+            rooms[nxRow][nxColumn] = rooms[po[0]][po[1]] + 1
+            queue.append([nxRow,nxColumn])
         }
-        queue = tempQueue
     }
-    return 0
 }
-ladderLength1("lost", "miss", ["most","mist","miss","lost","fist","fish"])
 
-
-
-
+func wallsAndGatesDFS(_ rooms: inout [[Int]]) {
+    let m = rooms.count
+    let n = rooms[0].count
+    var dirs = [[0,1],[-1,0],[1,0],[0,-1]]
+    var visited = Array(repeating: Array(repeating: false, count: n), count: m)
+    
+    func dfs(rooms: inout [[Int]], visited: inout [[Bool]], dist:Int, row: Int, column: Int ) {
+        if row < 0 || row >= m || column < 0 || column >= n || rooms[row][column] != Int.max || visited[row][column] == true { return }
+        
+        visited[row][column] = true
+        for dir in dirs {
+            dfs(rooms: &rooms, visited: &visited, dist: dist+1, row: row+dir[0], column: column+dir[1])
+        }
+        visited[row][column] = false
+    }
+    
+    for i in 0..<m {
+        for j in 0..<n {
+            if rooms[i][j] == 0 { dfs(rooms: &rooms, visited: &visited, dist: 0, row: i, column: j) }
+        }
+    }
+    
+}
+var max = [[2147483647,0,2147483647,2147483647,0,2147483647,-1,2147483647]]
+wallsAndGatesDFS(&max)
 
 
 //815. Bus Routes
@@ -85,42 +102,38 @@ func numBusesToDestination(_ routes: [[Int]], _ source: Int, _ target: Int) -> I
 //Input: beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"]
 //Output: 5
 func ladderLength(_ beginWord: String, _ endWord: String, _ wordList: [String]) -> Int {
-    var visited = Set<String>()
-    var queue = [String]()
-    queue.append(beginWord)
-    var step = 0
-    let a2z = "abcdefghijklmnopqrstuvwxyz"
+    if !wordList.contains(endWord) { return 0 }
     
-    func buildNewString(alphabet:Character, word: String, index:Int) -> String {
-        var wordStr = Array(word)
-        wordStr[index] = alphabet
-        var newStr = ""
-        for char in wordStr {
-            newStr += String(char)
+    func isOneWordDiff(begin:String, end:String) -> Bool {
+        var count = 0
+        let beginWordArr = Array(begin)
+        let endWordArr = Array(end)
+        for i in 0..<beginWord.count {
+            if beginWordArr[i] != endWordArr[i] {count+=1}
         }
-        return newStr
+        return count > 1 ? false : true
     }
-     
-    //revise char one by one and
-    // check revised word == endword
-    //check revised word be in wordlist: if Y, add in array, N continue.
-    while (!queue.isEmpty) {
-        step += 1
-        var size = queue.count
-        while ((size) != 0) {
-            size -= 1
-            let str = queue.removeFirst()
-            visited.insert(str)
-            for ch in a2z {
-                let newWord = buildNewString(alphabet: ch, word: str, index: 0)
-                if endWord == newWord { return step }
-                if wordList.contains(newWord) {queue.append(newWord)}
+    
+    var queue = [beginWord]
+    var count = 0
+    var visited = Array(repeating: false, count: wordList.count)
+    let wordCount = wordList.count
+    while( !queue.isEmpty ) {
+        count += 1
+        var tempQueue:[String] = []
+        for i in queue {
+            if i==endWord {return count}
+            for j in 0..<wordCount {
+                if isOneWordDiff(begin: i, end: wordList[j]) && visited[j] == false {
+                    visited[j] = true
+                    tempQueue.append(wordList[j])
+                }
             }
         }
+        queue = tempQueue
     }
     return 0
 }
-ladderLength("hit", "cog", ["hot","dot","dog","lot","log","cog"])
 
 //279. Perfect Squares
 //Input: n = 12
