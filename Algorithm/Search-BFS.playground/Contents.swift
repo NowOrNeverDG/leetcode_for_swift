@@ -34,24 +34,27 @@ func wallsAndGatesDFS(_ rooms: inout [[Int]]) {
     let m = rooms.count
     let n = rooms[0].count
     var dirs = [[0,1],[-1,0],[1,0],[0,-1]]
-    var visited = Array(repeating: Array(repeating: false, count: n), count: m)
     
-    func dfs(rooms: inout [[Int]], visited: inout [[Bool]], dist:Int, row: Int, column: Int ) {
-        if row < 0 || row >= m || column < 0 || column >= n || rooms[row][column] != Int.max || visited[row][column] == true { return }
+    func dfs(rooms: inout [[Int]], dist:Int, row: Int, column: Int ) {
+        if row < 0 || row >= m || column < 0 || column >= n || rooms[row][column] != Int.max { return }
+        if rooms[row][column] < dist || rooms[row][column] == -1 || rooms[row][column] == 0 { return }
         
-        visited[row][column] = true
+        rooms[row][column] = dist
+        
         for dir in dirs {
-            dfs(rooms: &rooms, visited: &visited, dist: dist+1, row: row+dir[0], column: column+dir[1])
+            dfs(rooms: &rooms, dist: dist+1, row: row+dir[0], column: column+dir[1])
         }
-        visited[row][column] = false
     }
     
     for i in 0..<m {
         for j in 0..<n {
-            if rooms[i][j] == 0 { dfs(rooms: &rooms, visited: &visited, dist: 0, row: i, column: j) }
+            if rooms[i][j] == 0 {
+                for dir in dirs {
+                    dfs(rooms: &rooms, dist: 0, row: i+dir[0], column: j+dir[1])
+                }
+            }
         }
     }
-    
 }
 var max = [[2147483647,0,2147483647,2147483647,0,2147483647,-1,2147483647]]
 wallsAndGatesDFS(&max)
