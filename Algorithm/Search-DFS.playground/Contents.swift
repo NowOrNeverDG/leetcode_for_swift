@@ -33,7 +33,7 @@ func wallsAndGatesDFS(_ rooms: inout [[Int]]) {
 //Input: transactions = [[0,1,10],[2,0,5]]
 //Output: 2
 func minTransfers(_ transactions: [[Int]]) -> Int {
-        
+    
 }
 //1258. Synonymous Sentences
 //Input: synonyms = [["happy","joy"],["sad","sorrow"],["joy","cheerful"]], text = "I am happy today but was sad yesterday"

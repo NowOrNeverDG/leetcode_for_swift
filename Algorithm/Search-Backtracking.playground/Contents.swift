@@ -458,7 +458,6 @@ func restoreIpAddresses(_ s: String) -> [String] {
 func letterCombinations(_ digits: String) -> [String] {
     if digits.count == 0 {return []}
     
-    
     let keyMaps:[Character:String] = ["2":"abc","3":"def","4":"ghi","5":"jkl","6":"mno","7":"pqrs","8":"tuv","9":"wxyz"]
     var result = [String]()
     var combinations = [String]()
@@ -480,6 +479,27 @@ func letterCombinations(_ digits: String) -> [String] {
     return result
 }
 
+func letterCombinationsBFS(_ digits: String) -> [String] {
+    let letters = [[],[""],["a","b","c"],["d","e","f"],["g","h","i"],["j","k","l"],["m","n","o"],["p","q","r","s"],["t","u","v"],["w","x","y","z"]]
+    
+    var digitsArr = Array(digits)
+    if digitsArr.count == 0  { return [] }
+    if digitsArr.count == 1 { return letters[Int(String(digitsArr[0])) ?? 0] }
+    
+    var queue = letters[Int(String(digitsArr[0])) ?? 0]
+    digitsArr.removeFirst()
+    while (!digitsArr.isEmpty) {
+        let digit = letters[Int(String(digitsArr.removeFirst()))!]
+        var temp = [String]()
+        for i in queue {
+            for j in digit {
+                temp.append(i+j)
+            }
+        }
+        queue = temp
+    }
+    return queue
+}
 
     
     
