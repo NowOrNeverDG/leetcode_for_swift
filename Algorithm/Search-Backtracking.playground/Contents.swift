@@ -451,6 +451,12 @@ func restoreIpAddresses(_ s: String) -> [String] {
     return result
 }
 
+//Input: s = "25525511135"
+//Output: ["255.255.11.135","255.255.111.35"]
+func restoreIpAddressesBFS(_ s: String) -> [String] {
+    
+}
+
 
 //17. Letter Combinations of a Phone Number
 //Input: digits = "23"
@@ -468,6 +474,7 @@ func letterCombinations(_ digits: String) -> [String] {
     backtracking(current: "",combinations:combinations, index:0,result: &result)
     
     func backtracking(current:String,combinations:[String],index:Int,result: inout [String]) {
+        print(current)
         if current.count == combinations.count {
             result.append(current)
             return
@@ -480,16 +487,15 @@ func letterCombinations(_ digits: String) -> [String] {
 }
 
 func letterCombinationsBFS(_ digits: String) -> [String] {
-    let letters = [[],[""],["a","b","c"],["d","e","f"],["g","h","i"],["j","k","l"],["m","n","o"],["p","q","r","s"],["t","u","v"],["w","x","y","z"]]
+    if digits.count == 0 { return [] }
+    let keyMaps:[Character:[String]] = ["2":["a","b","c"],"3":["d","e","f"],"4":["g","h","i"],"5":["j","k","l"],"6":["m","n","o"],"7":["p","q","r","s"],"8":["t","u","v"],"9":["w","x","y","z"]]
     
     var digitsArr = Array(digits)
-    if digitsArr.count == 0  { return [] }
-    if digitsArr.count == 1 { return letters[Int(String(digitsArr[0])) ?? 0] }
     
-    var queue = letters[Int(String(digitsArr[0])) ?? 0]
+    var queue = keyMaps[digitsArr[0]] ?? []
     digitsArr.removeFirst()
     while (!digitsArr.isEmpty) {
-        let digit = letters[Int(String(digitsArr.removeFirst()))!]
+        let digit = keyMaps[digitsArr.removeFirst()] ?? []
         var temp = [String]()
         for i in queue {
             for j in digit {
@@ -500,6 +506,6 @@ func letterCombinationsBFS(_ digits: String) -> [String] {
     }
     return queue
 }
-
+letterCombinationsBFS("234")
     
     
