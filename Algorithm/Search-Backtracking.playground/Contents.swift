@@ -13,6 +13,13 @@ public class TreeNode {
     }
 }
 
+//465. Optimal Account Balancing
+//Input: transactions = [[0,1,10],[2,0,5]]
+//Output: 2
+func minTransfers(_ transactions: [[Int]]) -> Int {
+    
+}
+
 //51. N-Queens
 //Input: n = 4
 //Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
@@ -190,64 +197,11 @@ func subsets(_ nums: [Int]) -> [[Int]] {
     return result
 }
 
-//216. Combination Sum III
-//Input: k = 3, n = 7
-//Output: [[1,2,4]]
-func combinationSum3(_ k: Int, _ n: Int) -> [[Int]] {
-    var current:[Int] = Array()
-    var result:[[Int]] = Array()
-    var visited:[Bool] = Array(repeating: false, count: 10)
-    backtracking(k: k, n: n, remain: n, count:0, pos:0, current: &current, visited: &visited, result: &result)
-
-    func backtracking(k:Int, n:Int, remain:Int, count:Int, pos:Int,current:inout [Int], visited:inout [Bool], result:inout [[Int]]) {
-        if remain == 0 && count == k{
-            result.append(current)
-            return
-        } else if count > k || remain < 0 { return }
-        
-        for i in pos...8 {
-            if visited[i] == true {continue}
-            visited[i] = true
-            current.append(i+1)
-            backtracking(k: k, n: n, remain: remain-i-1, count:count+1, pos:i, current: &current, visited: &visited, result: &result)
-            current.removeLast()
-            visited[i] = false
-        }
-    }
-    return result
-}
 
 
 
 
-//?40. Combination Sum II
-//Input: candidates = [10,1,2,7,6,1,5], target = 8
-//Output:[[1,1,6],[1,2,5],[1,7],[2,6]]
-func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
-    var current:[Int] = Array()
-    var result:[[Int]] = Array()
-    var visited:[Bool] = Array(repeating: false, count: candidates.count)
-    backtracking(candidates: candidates, target: target, pos:0, visited: &visited, current: &current, result: &result)
-    
-    func backtracking(candidates:[Int], target:Int, pos:Int, visited:inout [Bool], current:inout [Int], result:inout [[Int]]) {
-        var sum = 0
-        for ele in current { sum += ele }
-        if sum == target {
-            result.append(current)
-            return
-        } else if sum > target {return}
-        
-        for i in pos..<candidates.count {
-            if visited[i] == true {continue}
-            visited[i] = true
-            current.append(candidates[i])
-            backtracking(candidates: candidates, target: target, pos: i, visited: &visited, current: &current, result: &result)
-            current.removeLast()
-            visited[i] = false
-        }
-    }
-    return result
-}
+
 
 //39. Combination Sum
 //Input: candidates = [2,3,6,7], target = 7
@@ -272,6 +226,34 @@ func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
         }
     }
     return result
+}
+
+//Input: candidates = [10,1,2,7,6,1,5], target = 8
+//Output:[[1,1,6],[1,2,5],[1,7],[2,6]]
+func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    guard !candidates.isEmpty else { return [] }
+    var result = [[Int]]()
+    let candidatesCount = candidates.count
+    backtracing(candidates: candidates.sorted(), result: &result, remain: target, index: 0, currArr: [])
+    
+    func backtracing(candidates: [Int], result: inout [[Int]], remain: Int, index: Int,currArr:[Int] ) {
+        if remain == 0 {
+            result.append(currArr)
+            return
+        }
+
+        var tempCurrArr = currArr
+        for i in index..<candidatesCount {
+            guard remain >= candidates[i] else { return }
+             
+            if i != index && candidates[i] == candidates[i-1] { continue }
+            tempCurrArr.append(candidates[i])
+            backtracing(candidates: candidates, result: &result, remain: remain-candidates[i], index: i+1, currArr: tempCurrArr)
+            tempCurrArr.removeLast()
+        }
+    }
+    return result
+
 }
 
 //77. Combinations
@@ -359,32 +341,6 @@ func permute(_ nums: [Int]) -> [[Int]] {
     }
     return result
 }
-    
-
-//257. Binary Tree Paths
-//Input: root = [1,2,3,null,5]
-//Output: ["1->2->5","1->3"]
-func binaryTreePaths(_ root: TreeNode?) -> [String] {
-    if root == nil {return []}
-    if root?.left == nil && root?.right == nil {return ["\(root!.val)"]}
-    
-    var res:[String] = []
-    backtracking(currNode: root!, res: &res, tmpString: "\(root!.val)")
-    
-    func backtracking(currNode:TreeNode, res:inout [String],tmpString:String) {
-        if currNode.left == nil && currNode.right == nil {
-            res.append(tmpString)
-        }
-        if currNode.left != nil {
-            backtracking(currNode: currNode.left!, res: &res,tmpString: tmpString+"->"+"\(currNode.left!.val)")
-        }
-        if currNode.right != nil {
-            backtracking(currNode: currNode.right!, res: &res, tmpString: tmpString+"->"+"\(currNode.right!.val)")
-        }
-    }
-    return res
-}
-
 
 //79. Word Search
 //Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
@@ -421,6 +377,58 @@ func exist(_ board: [[Character]], _ word: String) -> Bool {
     return false
 }
 
+//216. Combination Sum III
+//Input: k = 3, n = 7
+//Output: [[1,2,4]]
+func combinationSum3(_ k: Int, _ n: Int) -> [[Int]] {
+    var current:[Int] = Array()
+    var result:[[Int]] = Array()
+    var visited:[Bool] = Array(repeating: false, count: 10)
+    backtracking(k: k, n: n, remain: n, count:0, pos:0, current: &current, visited: &visited, result: &result)
+
+    func backtracking(k:Int, n:Int, remain:Int, count:Int, pos:Int,current:inout [Int], visited:inout [Bool], result:inout [[Int]]) {
+        if remain == 0 && count == k{
+            result.append(current)
+            return
+        } else if count > k || remain < 0 { return }
+        
+        for i in pos...8 {
+            if visited[i] == true {continue}
+            visited[i] = true
+            current.append(i+1)
+            backtracking(k: k, n: n, remain: remain-i-1, count:count+1, pos:i, current: &current, visited: &visited, result: &result)
+            current.removeLast()
+            visited[i] = false
+        }
+    }
+    return result
+}
+
+
+//257. Binary Tree Paths
+//Input: root = [1,2,3,null,5]
+//Output: ["1->2->5","1->3"]
+func binaryTreePaths(_ root: TreeNode?) -> [String] {
+    if root == nil {return []}
+    if root?.left == nil && root?.right == nil {return ["\(root!.val)"]}
+    
+    var res:[String] = []
+    backtracking(currNode: root!, res: &res, tmpString: "\(root!.val)")
+    
+    func backtracking(currNode:TreeNode, res:inout [String],tmpString:String) {
+        if currNode.left == nil && currNode.right == nil {
+            res.append(tmpString)
+        }
+        if currNode.left != nil {
+            backtracking(currNode: currNode.left!, res: &res,tmpString: tmpString+"->"+"\(currNode.left!.val)")
+        }
+        if currNode.right != nil {
+            backtracking(currNode: currNode.right!, res: &res, tmpString: tmpString+"->"+"\(currNode.right!.val)")
+        }
+    }
+    return res
+}
+
 //93. Restore IP Addresses
 //Input: s = "25525511135"
 //Output: ["255.255.11.135","255.255.111.35"]
@@ -454,8 +462,29 @@ func restoreIpAddresses(_ s: String) -> [String] {
 //Input: s = "25525511135"
 //Output: ["255.255.11.135","255.255.111.35"]
 func restoreIpAddressesBFS(_ s: String) -> [String] {
+    if s.count < 4 || s.count > 12 { return [] }
     
+    let sArr = Array(s)
+    var result = [String]()
+    backtracking(sArr: sArr, pos: 0, remain: "", group: 1, result: &result)
+    
+    func backtracking(sArr:[Character], pos:Int, remain:String, group:Int, result: inout [String]) {
+        if group > 4 { return }
+        if group == 4 && pos == sArr.count {
+            result.append(remain)
+        }
+        
+        for i in 0...2 {
+            if pos + i >= s.count {break}
+            let temp = String(sArr[pos...(pos+i)])
+            if (temp.first == "0" && temp.count > 1) || Int(temp) ?? 255 > 255 {continue}
+            var remain = remain + "." + temp
+            backtracking(sArr: sArr, pos: pos+1, remain: remain, group: group+1, result: &result)
+        }
+    }
+    return result
 }
+restoreIpAddressesBFS("25525511135")
 
 
 //17. Letter Combinations of a Phone Number
@@ -507,5 +536,3 @@ func letterCombinationsBFS(_ digits: String) -> [String] {
     return queue
 }
 letterCombinationsBFS("234")
-    
-    

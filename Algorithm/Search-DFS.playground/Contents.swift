@@ -29,12 +29,7 @@ func wallsAndGatesDFS(_ rooms: inout [[Int]]) {
     }
 }
 
-//465. Optimal Account Balancing
-//Input: transactions = [[0,1,10],[2,0,5]]
-//Output: 2
-func minTransfers(_ transactions: [[Int]]) -> Int {
-    
-}
+
 //1258. Synonymous Sentences
 //Input: synonyms = [["happy","joy"],["sad","sorrow"],["joy","cheerful"]], text = "I am happy today but was sad yesterday"
 //Output: ["I am cheerful today but was sad yesterday","I am cheerful today but was sorrow yesterday","I am happy today but was sad yesterday","I am happy today but was sorrow yesterday","I am joy today but was sad yesterday","I am joy today but was sorrow yesterday"]
