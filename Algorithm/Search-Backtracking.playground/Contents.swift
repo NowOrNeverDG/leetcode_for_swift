@@ -536,3 +536,35 @@ func letterCombinationsBFS(_ digits: String) -> [String] {
     return queue
 }
 letterCombinationsBFS("234")
+
+//60. Permutation Sequence
+//Input: n = 3, k = 3
+//Output: "213"
+func getPermutation(_ n: Int, _ k: Int) -> String {
+    var noArr  = Array(repeating: 0, count: n)
+    for i in 1...n {//1
+        noArr[i-1] = i
+    }
+    
+    func factorialOfValue(value:Int) -> Int {
+        if value == 0 { return 1 }
+    
+        var product = 1
+        for i in 1...value {
+            product = product*i
+        }
+        return product
+    }
+    
+    func backtracking(remianK: Int, currNo: Int, currIndex: Int) -> Int {
+        if currIndex == n { return currNo }
+        let factorialVal = factorialOfValue(value: n-currIndex-1)
+
+        var digit = remianK / factorialVal
+        var currNo = currNo*10 + noArr[digit]
+        print("digit: \(digit), remainK: \(remianK), currNo: \(currNo), noArr: \(noArr), ")
+        noArr.remove(at: digit)
+        return backtracking(remianK: remianK % factorialVal, currNo: currNo, currIndex: currIndex+1)
+    }
+    return String(backtracking(remianK: k-1, currNo: 0, currIndex: 0))
+}
