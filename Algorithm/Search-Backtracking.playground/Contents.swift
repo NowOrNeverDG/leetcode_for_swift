@@ -568,3 +568,41 @@ func getPermutation(_ n: Int, _ k: Int) -> String {
     }
     return String(backtracking(remianK: k-1, currNo: 0, currIndex: 0))
 }
+
+//140. Word Break II
+//Input: s = "pineapplepenapple", wordDict = ["apple","pen","applepen","pine","pineapple"]
+//Output: ["pine apple pen apple","pineapple pen apple","pine applepen apple"]
+func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
+    var result = [String]()
+    backtracking(currS: s, currString: "", result: &result)
+    func sameWord(currS:String, word: String, count: Int) -> Bool {
+        let currSWord = String(currS.prefix(count))
+        if currSWord != word { return false }
+        return true
+    }
+    
+    func backtracking(currS: String, currString: String, result: inout [String]) {
+        guard currS.count != 0 else {
+            result.append(currString)
+            return
+        }
+        
+        let firstChar = currS.first
+        for i in 0..<wordDict.count {
+            if sameWord(currS: currS, word: wordDict[i], count: wordDict[i].count) {
+                var currString = currString
+                if currString.count == 0 {
+                    currString = currString + wordDict[i]
+                }else {
+                    currString = currString + " " + wordDict[i]
+                }
+                var currS = currS
+                currS = String(currS.dropFirst(wordDict[i].count))
+                print("currS:\(currS), currString:\(currString)")
+                backtracking(currS: currS, currString: currString, result: &result)
+                
+            }
+        }
+    }
+    return result
+}
