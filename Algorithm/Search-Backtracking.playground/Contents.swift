@@ -13,13 +13,6 @@ public class TreeNode {
     }
 }
 
-//465. Optimal Account Balancing
-//Input: transactions = [[0,1,10],[2,0,5]]
-//Output: 2
-func minTransfers(_ transactions: [[Int]]) -> Int {
-    
-}
-
 //51. N-Queens
 //Input: n = 4
 //Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
@@ -638,4 +631,36 @@ func getFactors(_ n: Int) -> [[Int]] {
                   
     }
     return result
+}
+
+//207. Course Schedule
+//Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+//Output: false
+func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
+    var courseDic = [Int:[Int]]()
+    var visited = Array(repeating: 0, count: numCourses)
+    for i in prerequisites {
+        courseDic[i[0], default: []].append(i[1])
+    }
+    
+    for i in 0..<numCourses {
+        print("course is: \(i)")
+        if !backtracking(courseDic: courseDic, visited: &visited, index: i) { return false }
+    }
+    
+    func backtracking(courseDic: [Int:[Int]], visited: inout [Int], index: Int) -> Bool {
+
+        if visited[index] == 1 { return false }
+        if visited[index] == 2 { return true }
+        guard courseDic[index] != nil else { return true}
+        print("visited: \(visited)")
+        visited[index] = 1
+        for i in courseDic[index]! {
+            print("now check course: \(i)")
+            if !backtracking(courseDic: courseDic, visited: &visited, index: i) { return false }
+        }
+        visited[index] = 2
+        return true
+    }
+    return true
 }
