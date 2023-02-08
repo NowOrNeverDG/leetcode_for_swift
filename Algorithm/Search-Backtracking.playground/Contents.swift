@@ -606,3 +606,36 @@ func wordBreak(_ s: String, _ wordDict: [String]) -> [String] {
     }
     return result
 }
+
+//254. Factor Combinations
+//Input: n = 12
+//Output: [[2,6],[3,4],[2,2,3]]
+func getFactors(_ n: Int) -> [[Int]] {
+    guard n >= 3 else { return [] }
+    var deliverList = [Int]()
+    var result = [[Int]]()
+    for i in 2..<n {
+        if n % i == 0 {
+            deliverList.append(i)
+        }
+    }
+    backtracking(remainN: n, currArr: [], deliverList: deliverList, listIndex: 0, result: &result)
+    
+    func backtracking(remainN: Int, currArr:[Int], deliverList:[Int], listIndex:Int, result: inout [[Int]]) {
+        if remainN == 1 {
+            result.append(currArr)
+            return
+        }
+        
+        for i in listIndex..<deliverList.count {
+            if remainN % deliverList[i] != 0 {continue}
+            
+            var currArr = currArr
+            currArr.append(deliverList[i])
+            backtracking(remainN: remainN/deliverList[i], currArr: currArr, deliverList: deliverList, listIndex: i, result: &result)
+            currArr.removeLast()
+        }
+                  
+    }
+    return result
+}
