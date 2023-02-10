@@ -664,3 +664,34 @@ func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
     }
     return true
 }
+
+//291. Word Pattern II
+//Input: pattern = "abab", s = "redblueredblue"
+//Output: true
+func wordPatternMatch(_ pattern: String, _ s: String) -> Bool {
+    if backtracking(pattern: pattern,s: s, mapDict: [Character:String]()) { return true }
+    
+    func backtracking(pattern: String,s: String, mapDict: [Character:String]) -> Bool {
+        guard let mapChar = pattern.first, s.count != 0 else {
+            return pattern.count == 0 && s.count == 0
+        }
+        
+        if let existedPattern = mapDict[mapChar] {
+            if s.hasPrefix(existedPattern) {
+                return backtracking(pattern: String(pattern.suffix(pattern.count-1)), s: String(s.suffix(s.count-existedPattern.count)), mapDict: mapDict)
+            } else {
+                return false
+            }
+        }
+        
+        for i in 0..<s.count {
+            if mapDict.values.contains(String(s.prefix(i+1))) { continue }
+            var tmpDict = mapDict
+            tmpDict[mapChar] = String(s.prefix(i+1))
+            if backtracking(pattern: String(pattern.suffix(pattern.count-1)), s: String(s.suffix(s.count-i-1)), mapDict: tmpDict) { return true}
+        }
+        return false
+    }
+    
+    return false
+}
