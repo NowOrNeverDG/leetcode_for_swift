@@ -695,3 +695,26 @@ func wordPatternMatch(_ pattern: String, _ s: String) -> Bool {
     
     return false
 }
+
+//294. Flip Game II
+func canWin(_ currentState: String) -> Bool {
+    if currentState.count < 2 { return false }
+    let currArr = Array(currentState)
+    if backtracking(currentState: currArr) { return true }
+    
+    func backtracking(currentState:[Character]) -> Bool {
+        for i in 1..<currentState.count {
+            var currentState = currentState
+            if currentState[i-1] == "+" && currentState[i] == "+" {
+                currentState[i-1] = "-"
+                currentState[i] = "-"
+                let win = !backtracking(currentState: currentState)
+                currentState[i-1] = "+"
+                currentState[i] = "+"
+                if win { return true }
+            }
+        }
+        return false
+    }
+    return false
+}
