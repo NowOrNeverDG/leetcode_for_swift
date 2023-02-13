@@ -173,6 +173,50 @@ func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
     return []
 }
 
+//11. Container With Most Water
+//Input: height = [1,8,6,2,5,4,8,3,7]
+//Output: 49
+func maxArea(_ height: [Int]) -> Int {
+    var left = 0
+    var right = height.count - 1
+    var maxArea = 0
+    while (left < right) {
+        maxArea = max(maxArea, min(height[left], height[right]) * (right-left))
+        if height[left] <= height[right] {
+            left += 1
+        } else {
+            right -= 1
+        }
+    }
+    return maxArea
+}
 
-
-
+//15. 3Sum
+//Input: nums = [-1,0,1,2,-1,-4]
+//Output: [[-1,-1,2],[-1,0,1]]
+func threeSum(_ nums: [Int]) -> [[Int]] {
+    var nums = nums.sorted()
+    var result = [[Int]]()
+    for i in 0..<nums.count {
+        if i != 0 && nums[i] == nums[i-1] {continue}
+        var left = i+1
+        var right = nums.count-1
+        while (left < right) {
+            let sum = nums[i] + nums[left] + nums[right]
+            if  sum == 0{
+                result.append([nums[i], nums[left], nums[right]])
+                left += 1
+                right -= 1
+                while(left < right && nums[left] == nums[left-1]) {
+                    left += 1
+                }
+                
+            } else if sum < 0 {
+                left += 1
+            } else {
+                right -= 1
+            }
+        }
+    }
+    return result
+}
