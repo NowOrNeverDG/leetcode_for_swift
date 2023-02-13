@@ -220,3 +220,73 @@ func threeSum(_ nums: [Int]) -> [[Int]] {
     }
     return result
 }
+
+
+//16. 3Sum Closest
+//Input: nums = [-1,2,1,-4], target = 1
+//Output: 2
+func threeSumClosest(_ nums: [Int], _ target: Int) -> Int {
+    let nums = nums.sorted()
+    var distance = Int.max
+    var result = 0
+    for i in 0..<nums.count {
+        var left = i+1
+        var right = nums.count-1
+        while(left < right) {
+            let sum = nums[i] + nums[left] + nums[right]
+            let currDistance = abs(sum-target)
+            distanceCalculator(currDistance: currDistance, sum: sum)
+            if sum > target {
+                right -= 1
+            } else if sum < target {
+                left += 1
+            } else {
+                return target
+            }
+        }
+    }
+    
+    func distanceCalculator(currDistance: Int,sum:Int) {
+        if currDistance < distance {
+            distance = currDistance
+            result = sum
+        }
+    }
+    return result
+}
+
+//18. 4Sum
+//Input: nums = [1,0,-1,0,-2,2], target = 0
+//Output: [[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
+    let nums = nums.sorted()
+    var result = [[Int]]()
+    for i in 0..<nums.count {
+        if i != 0 && nums[i-1] == nums[i] {continue}
+        for j in i+1..<nums.count {
+            if j > i+1 && nums[j-1] == nums[j] {continue}
+            var left = j + 1
+            var right = nums.count-1
+            while (left < right) {
+                let sum = nums[i] + nums[j] + nums[left] + nums[right]
+                if  sum == target {
+                    result.append([nums[i],nums[j],nums[left],nums[right]])
+                    left += 1
+                    right -= 1
+                    while(nums[left] == nums[left-1] && left < right) {
+                        left += 1
+                    }
+                    while(nums[right] == nums[right+1] && left < right) {
+                        right -= 1
+                    }
+                } else if sum < target {
+                    left += 1
+                } else {
+                    right -= 1
+                }
+            }
+        }
+    }
+    
+    return result
+}
