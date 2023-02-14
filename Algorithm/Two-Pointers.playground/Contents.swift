@@ -290,3 +290,21 @@ func fourSum(_ nums: [Int], _ target: Int) -> [[Int]] {
     
     return result
 }
+
+
+//28. Find the Index of the First Occurrence in a String
+//Input: haystack = "sadbutsad", needle = "sad"
+//Output: 0
+func strStr(_ haystack: String, _ needle: String) -> Int {
+    if haystack.count < needle.count { return -1 }
+    for i in 0...haystack.count-needle.count {
+        let startIndex = haystack.index(haystack.startIndex, offsetBy: i)
+        let endIndex = haystack.index(haystack.startIndex, offsetBy: i+needle.count)
+        print(haystack[startIndex..<endIndex])
+        if haystack[startIndex..<endIndex] == needle {
+            return i
+        }
+
+    }
+    return -1
+}
