@@ -308,3 +308,83 @@ func strStr(_ haystack: String, _ needle: String) -> Int {
     }
     return -1
 }
+
+//42. Trapping Rain Water
+//Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+//Output: 6
+func trap(_ height: [Int]) -> Int {
+       var left = 0
+       var right = height.count - 1
+       var result = 0
+       
+       while (left < right) {
+           if height[left] <= height[right] {
+               let current = height[left]
+               left += 1
+               while(current >= height[left] && left < right) {
+                   result += current - height[left]
+                   left += 1
+               }
+
+           } else {
+               let current = height[right]
+               right -= 1
+
+               while(current >= height[right] && left < right) {
+                   result += current - height[right]
+                   right -= 1
+               }
+           }
+       }
+       return result
+   }
+
+//61. Rotate List
+//Input: head = [1,2,3,4,5], k = 2
+//Output: [4,5,1,2,3]
+func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
+    var findTail = head
+    var size = 1
+    
+    while(findTail?.next != nil) {
+        findTail = findTail?.next
+        size += 1
+    }
+    findTail?.next = head
+
+    var op = size - (k % size)
+    var head = head
+    for _ in 1..<op {
+        head = head?.next
+    }
+    let result = head?.next
+    head?.next = nil
+    return result
+}
+
+//75. Sort Colors
+//Input: nums = [2,0,2,1,1,0]
+//Output: [0,0,1,1,2,2]
+func sortColors(_ nums: inout [Int]) {
+        var curr = 0
+        var left = 0
+        var right = nums.count-1
+        
+        while (curr <= right) {
+            if nums[curr] == 0 {
+                let temp = nums[left]
+                nums[left] = nums[curr]
+                nums[curr] = temp
+                left += 1
+                curr += 1
+            } else if nums[curr] == 2 {
+                let temp = nums[right]
+                nums[right] = nums[curr]
+                nums[curr] = temp
+                right -= 1
+            } else {
+                curr += 1
+                
+            }
+        }
+    }
