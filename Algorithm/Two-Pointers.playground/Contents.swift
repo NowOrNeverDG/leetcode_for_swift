@@ -388,3 +388,52 @@ func sortColors(_ nums: inout [Int]) {
             }
         }
     }
+
+//80. Remove Duplicates from Sorted Array II
+//Input: nums = [1,1,1,2,2,3]
+//Output: 5, nums = [1,1,2,2,3,_]
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+    var left = 1
+    var count = 1
+    
+    for i in 1..<nums.count {
+        if nums[i-1] == nums[i] {
+            count += 1
+        } else {
+            count = 1
+        }
+        
+        if count <= 2 {
+            nums[left] = nums[i]
+            left += 1
+        }
+    }
+    return left
+}
+
+//86. Partition List
+//Input: head = [1,4,3,2,5,2], x = 3
+//Output: [1,2,2,4,3,5]
+func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
+    var leftFirstNode = ListNode(0)
+    var rightFirstNode = ListNode(0)
+
+    var currLeftNode = leftFirstNode
+    var currRightNode = rightFirstNode
+    var currHead = head
+    while(currHead != nil) {
+        
+        if currHead!.val < x {
+            currLeftNode.next = currHead
+            currLeftNode = currLeftNode.next!
+        }else {
+            currRightNode.next = currHead!
+            currRightNode = currRightNode.next!
+        }
+        let temp = currHead
+        currHead = currHead?.next
+        temp?.next = nil
+    }
+    currLeftNode.next = rightFirstNode.next
+    return leftFirstNode.next
+}
