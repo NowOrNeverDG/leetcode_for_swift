@@ -437,3 +437,53 @@ func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
     currLeftNode.next = rightFirstNode.next
     return leftFirstNode.next
 }
+
+//142. Linked List Cycle II
+//Input: head = [3,2,0,-4], pos = 1
+//Output: tail connects to node index 1
+func detectCycle(_ head: ListNode?) -> ListNode? {
+    var leftNode = head
+    var rightNode = head
+
+    while(rightNode?.next?.next != nil && leftNode?.next != nil) {
+        rightNode = rightNode?.next?.next
+        leftNode = leftNode?.next
+
+        if leftNode === rightNode {
+            rightNode = head
+            while (rightNode !== leftNode ) {
+                rightNode = rightNode?.next
+                leftNode = leftNode?.next
+            }
+            return rightNode
+         }
+    }
+
+    return nil
+}
+
+//159. Longest Substring with At Most Two Distinct Characters
+//Input: s = "eceba"
+//Output: 3
+func lengthOfLongestSubstringTwoDistinct(_ s: String) -> Int {
+    if s.count < 3 { return s.count }
+    var left = 0
+    var right = 0
+    var distictDic = [Character:Int]()
+    let sArr = Array(s)
+    var maxCount = 1
+    while(right < sArr.count) {
+        distictDic[sArr[right]] = right
+        if distictDic.count == 3 {
+            let delete_pair = distictDic.min { left_pair, right_pair in
+                left_pair.value < right_pair.value
+            }
+            guard let delete_pair = delete_pair else { return -1 }
+            distictDic.removeValue(forKey: delete_pair.key)
+            left = delete_pair.value+1
+        }
+        right += 1
+        maxCount = max(maxCount, right - left)
+    }
+    return maxCount
+}
