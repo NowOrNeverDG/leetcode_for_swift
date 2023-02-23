@@ -487,3 +487,74 @@ func lengthOfLongestSubstringTwoDistinct(_ s: String) -> Int {
     }
     return maxCount
 }
+
+
+//209. Minimum Size Subarray Sum
+//Input: target = 7, nums = [2,3,1,2,4,3]
+//Output: 2
+func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
+    var left = 0
+    var right = 0
+    var sum = 0
+    var distance = Int.max
+    while (right < nums.count) {
+        sum = sum + nums[right]
+        while (sum >= target) {
+            distance = min(distance, right - left)
+            sum = sum - nums[left]
+            left += 1
+        }
+        right += 1
+    }
+    return distance == Int.max ? 0 : distance+1
+}
+
+//234. Palindrome Linked List
+//Input: head = [1,2,2,1]
+//Output: true
+func isPalindrome(_ head: ListNode?) -> Bool {
+    var headStr = [Int]()
+    var head = head
+    while (head != nil) {
+        headStr.append(head!.val)
+        head = head!.next
+    }
+    
+    while(headStr.count > 1) {
+        if headStr.first != headStr.last { return false }
+        headStr.removeFirst()
+        headStr.removeLast()
+    }
+    
+    return true
+}
+
+//259. 3Sum Smaller
+//Input: nums = [-2,0,1,3], target = 2
+//Output: 2
+func threeSumSmaller(_ nums: [Int], _ target: Int) -> Int {
+    if nums.count == 0 { return 0 }
+    if nums.count < 4 {
+        let sum = nums.reduce(0) { partialResult, num in
+        return partialResult + num
+        }
+        return sum < target ? 1 : 0
+    }
+    let nums = nums.sorted()
+    
+    var count = 0
+    for i in 0..<nums.count-2 {
+        var left = i+1
+        var right = nums.count-1
+        while(left < right) {
+            print("\(nums[i]) \(nums[left]) \(nums[right])")
+            if nums[i] + nums[left] + nums[right] < target {
+                count += right - left
+                left += 1
+            } else {
+                right -= 1
+            }
+        }
+    }
+    return count
+}
