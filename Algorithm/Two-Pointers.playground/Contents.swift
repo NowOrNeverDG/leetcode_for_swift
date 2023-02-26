@@ -558,3 +558,75 @@ func threeSumSmaller(_ nums: [Int], _ target: Int) -> Int {
     }
     return count
 }
+
+
+//349. Intersection of Two Arrays
+//Input: nums1 = [1,2,2,1], nums2 = [2,2]
+//Output: [2]
+func intersection(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    var res = [Int]()
+    var nums1Set = Set(nums1)
+    var nums2Set = Set(nums2)
+    for i in nums1Set {
+        if nums2Set.contains(i) {
+            res.append(i)
+        }
+    }
+    return res
+}
+
+//350. Intersection of Two Arrays II
+//Input: nums1 = [1,2,2,1], nums2 = [2,2]
+//Output: [2,2]
+func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    if nums1.count > nums2.count { return intersect(nums2, nums1) }
+    var result = [Int]()
+    var nums1Dic = [Int:Int]()
+    for i in nums1 {
+        nums1Dic[i,default: 0] += 1
+    }
+    
+    for i in nums2 {
+        if nums1Dic[i] != nil && nums1Dic[i]! > 0 {
+            nums1Dic[i]! -= 1
+            result.append(i)
+        }
+    }
+    return result
+}
+
+//360. Sort Transformed Array
+//Input: nums = [-4,-2,2,4], a = 1, b = 3, c = 5
+//Output: [3,9,15,33]
+func sortTransformedArray(_ nums: [Int], _ a: Int, _ b: Int, _ c: Int) -> [Int] {
+    var result = [Int]()
+    for i in nums {
+        result.append(a * i * i + b * i + c)
+    }
+    return result.sorted()
+}
+
+//424. Longest Repeating Character Replacement
+//Input: s = "ABAB", k = 2
+//Output: 4
+func characterReplacement(_ s: String, _ k: Int) -> Int {
+    var left = 0
+    var freqMap = [Character: Int]()
+    let sArr = Array(s)
+    var maxFreq = 0
+    var longestSubstringLength = 0
+    for right in 0..<sArr.count {
+        freqMap[sArr[right],default: 0] += 1
+        maxFreq = max(maxFreq, freqMap[sArr[right]]!)
+        
+        if right - left + 1 - maxFreq > k {
+            freqMap[sArr[left]]! -= 1
+            left += 1
+        }
+        
+        longestSubstringLength = max(longestSubstringLength, right - left + 1)
+    }
+    
+    return longestSubstringLength
+}
+
