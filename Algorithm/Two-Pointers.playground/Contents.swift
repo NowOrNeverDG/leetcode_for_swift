@@ -630,3 +630,26 @@ func characterReplacement(_ s: String, _ k: Int) -> Int {
     return longestSubstringLength
 }
 
+//487. Max Consecutive Ones II
+//Input: nums = [1,0,1,1,0]
+//Output: 4
+func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
+    var left = 0
+    var right = 0
+    var distance = 0
+    var zeroCount = 0
+    while right < nums.count {
+        if nums[right] == 0 {
+            zeroCount += 1
+            while zeroCount >= 2 {
+                if nums[left] == 0 {
+                    zeroCount -= 1
+                }
+                left += 1
+            }
+        }
+        right += 1
+        distance = max(distance, right - left)
+    }
+    return distance
+}
