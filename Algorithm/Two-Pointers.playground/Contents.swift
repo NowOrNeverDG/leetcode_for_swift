@@ -653,3 +653,47 @@ func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
     }
     return distance
 }
+
+//524. Longest Word in Dictionary through Deleting
+//Input: s = "abpcplea", dictionary = ["ale","apple","monkey","plea"]
+//Output: "apple"
+func findLongestWord(_ s: String, _ dictionary: [String]) -> String {
+    func characterComparison(firstString: String, secondString: String) -> String {
+        let count = firstString.count > secondString.count ? secondString.count : firstString.count
+        
+        for i in 0..<count {
+            if Array(firstString)[i].asciiValue! == Array(secondString)[i].asciiValue! { continue }
+            return Array(firstString)[i].asciiValue! > Array(secondString)[i].asciiValue! ? secondString : firstString
+        }
+        return firstString
+    }
+    
+    let sArr = Array(s)
+    var result = ""
+    for givenStr in dictionary {
+        let givenStrArr = Array(givenStr)
+        
+        var sArrPointer = 0
+        var givenStrPointer = 0
+        while (sArrPointer < sArr.count ) {
+            if sArr[sArrPointer] == givenStrArr[givenStrPointer] {
+                givenStrPointer += 1
+            }
+            
+            if givenStrPointer >= givenStrArr.count {
+                if result.count == givenStrArr.count {
+                    result = characterComparison(firstString: result, secondString: givenStr)
+                } else {
+                    result = result.count > givenStrArr.count ? result : givenStr
+                }
+                break
+            }
+            sArrPointer += 1
+        }
+    }
+    return result
+}
+
+//532. K-diff Pairs in an Array
+//Input: nums = [3,1,4,1,5], k = 2
+//Output: 2
