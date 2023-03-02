@@ -9,34 +9,6 @@ public class ListNode {
     }
 }
 
-//524. Longest Word in Dictionary through Deleting
-//Input: s = "abpcplea", dictionary = ["ale","apple","monkey","plea"]
-//Output: "apple"
-func findLongestWord(_ s: String, _ dictionary: [String]) -> String {
-    var result = ""
-    var sArr = Array(s)
-    for ele in dictionary {
-        var po1 = 0//for ele
-        var po2 = 0//for sArr
-        var eleArr = Array(s)
-        while ( po2 < sArr.count) {
-            if po1 < ele.count && sArr[po2] == eleArr[po1] {
-                po1 += 1
-                po2 += 1
-            }else {
-                po2 += 1
-            }
-        }
-        if po1 == eleArr.count - 1 {
-            result = result.count > eleArr.count ? result : eleArr.reduce("", { partialResult, char in
-                return partialResult + String(char)
-            })
-        }
-    }
-    return result
-}
-
-
 //141.Linked List Cycle
 //Input: head = [3,2,0,-4], pos = 1
 //Output: true
@@ -697,3 +669,79 @@ func findLongestWord(_ s: String, _ dictionary: [String]) -> String {
 //532. K-diff Pairs in an Array
 //Input: nums = [3,1,4,1,5], k = 2
 //Output: 2
+func findPairs(_ nums: [Int], _ k: Int) -> Int {
+        if nums.count < 2 { return 0 }
+        if nums.count == 2 { return abs(nums[1]-nums[0] == k ? 1:0)}
+        let nums = nums.sorted()
+        var result = 0
+        var left = 0
+        var right = 1
+        
+        while(right < nums.count) {
+            if nums[right] - nums[left] < k {
+                right += 1
+            } else if nums[right] - nums[left] > k {
+                left += 1
+            } else if nums[right] - nums[left] == k {
+                print("\(nums[left]) \(nums[right])")
+                result += 1
+                left += 1
+                right += 1
+                while (left < nums.count && nums[left] == nums[left-1]) {
+                    left += 1
+                }
+            }
+            
+            if left >= right {
+                right = left + 1
+            }
+        }
+        return result
+    }
+
+
+//844. Backspace String Compare
+func backspaceCompare(_ s: String, _ t: String) -> Bool {
+    var sArr = Array(s)
+    var tArr = Array(t)
+    var tempS = [Character]()
+    for i in 0..<sArr.count {
+        if sArr[i] == "#" {
+            if tempS.count > 0 {
+                tempS.removeLast()
+            }
+        } else {
+            tempS.append(sArr[i])
+        }
+    }
+
+    var tempT = [Character]()
+    for i in 0..<tArr.count {
+        if tArr[i] == "#" {
+            if tempT.count > 0 {
+                tempT.removeLast()
+            }
+        } else {
+            tempT.append(tArr[i])
+        }
+    }
+
+    return tempS == tempT ? true : false
+}
+
+//713. Subarray Product Less Than K
+func numSubarrayProductLessThanK(_ nums: [Int], _ k: Int) -> Int {
+    var left = 0
+    var sum = 1
+    var result = 0
+    for right in 0..<nums.count {
+        sum = sum * nums[right]
+        while (sum >= k && left <= right ) {
+            sum /= nums[left]
+            left += 1
+        }
+
+        result += right - left + 1
+    }
+    return result
+}
