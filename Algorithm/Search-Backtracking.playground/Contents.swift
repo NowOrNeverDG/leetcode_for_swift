@@ -718,3 +718,53 @@ func canWin(_ currentState: String) -> Bool {
     }
     return false
 }
+
+//320. Generalized Abbreviation
+func isAdditiveNumber(_ num: String) -> Bool {
+    guard num.count >= 3 else { return false }
+    let digits = Array(num).map { Int(String($0))! }
+    for i in 0..<digits.count-2 {
+        guard let num1 = digitsToInt(digits[0...i]) else { continue }
+        for j in i+1..<digits.count-1 {
+            guard let num2 = digitsToInt(digits[i+1...j]) else { continue }
+            if isAdditive(num1, num2, Array(digits[(j+1)...])) { return true }
+        }
+    }
+    return false
+}
+
+func isAdditive(_ nums1: Int,_ nums2: Int,_ digits:[Int]) -> Bool {
+    guard digits.count > 0 else { return false }
+    let sumDigits = intToDigits(nums1 + nums2)
+    
+    if sumDigits.count == digits.count {
+        return sumDigits == digits
+    } else if sumDigits.count < digits.count {
+        let count = sumDigits.count
+        return sumDigits[0..<count] == digits[0..<count] && isAdditive(nums2, nums2+nums1, Array(digits[count...]))
+    } else {
+        return false
+    }
+}
+
+func digitsToInt(_ digits:ArraySlice<Int>) -> Int? {
+    guard digits.count > 0 else { return nil }
+    if digits.first == 0 { return digits.count == 1 ? 0 : nil }
+    var result = 0
+    for digit in digits {
+        result = result*10 + digit
+    }
+    
+    return result
+}
+
+func intToDigits(_ num:Int) -> [Int] {
+    var num = num, digits = [Int]()
+    while num > 0 {
+        digits.append(num % 10)
+        num = num / 10
+    }
+    
+    digits.reverse()
+    return digits.isEmpty ? [0] : digits
+}
