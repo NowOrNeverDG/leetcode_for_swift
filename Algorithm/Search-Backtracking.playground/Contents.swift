@@ -719,7 +719,7 @@ func canWin(_ currentState: String) -> Bool {
     return false
 }
 
-//320. Generalized Abbreviation
+//306. Additive Number
 func isAdditiveNumber(_ num: String) -> Bool {
     guard num.count >= 3 else { return false }
     let digits = Array(num).map { Int(String($0))! }
@@ -768,3 +768,21 @@ func intToDigits(_ num:Int) -> [Int] {
     digits.reverse()
     return digits.isEmpty ? [0] : digits
 }
+
+
+//357. Count Numbers with Unique Digits
+func countNumbersWithUniqueDigits(_ n: Int) -> Int {
+        if n == 0 { return 1 }
+        if n == 1 { return 10 }
+        if n >= 11 { return 0 }
+        var n = n - 2
+        var multiplier = 9
+        var availableDigits = 9
+        var count = 10
+        for _ in 0...n {
+            availableDigits *= multiplier
+            multiplier = multiplier - 1
+            count += availableDigits
+        }
+        return count
+    }
