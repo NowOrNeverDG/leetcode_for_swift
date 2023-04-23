@@ -786,3 +786,39 @@ func countNumbersWithUniqueDigits(_ n: Int) -> Int {
         }
         return count
     }
+
+//526. Beautiful Arrangement
+func countArrangement(_ n: Int) -> Int {
+    var result = 0
+    backtracking(tempArr: [])
+    
+    func backtracking(tempArr:[Int]) {
+        if tempArr.count == n {
+            print(tempArr)
+            result += 1
+            return
+        }
+        
+        let first = tempArr.count
+        for i in 1...n {
+            if tempArr.contains(i) { continue }
+            if !isDivisibleOrDivisor(first: first+1, second: i) { continue }
+            var tempArr = tempArr
+            tempArr.append(i)
+            backtracking(tempArr: tempArr)
+            tempArr.removeLast()
+        }
+    }
+    
+    func isDivisibleOrDivisor(first: Int, second: Int) -> Bool {
+        if first % second == 0 {
+            return true
+        } else if second % first == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    return result
+}
