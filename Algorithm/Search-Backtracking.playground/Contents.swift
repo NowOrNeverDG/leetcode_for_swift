@@ -822,3 +822,32 @@ func countArrangement(_ n: Int) -> Int {
     
     return result
 }
+
+//784. Letter Case Permutation
+func letterCasePermutation(_ s: String) -> [String] {
+    var result = [s]
+    backtracking(tempS: Array(s), index: 0)
+    
+    func backtracking(tempS:[Character], index:Int) {
+        if index >= tempS.count { return }
+        for i in index..<tempS.count {
+            var tempSArr = tempS
+            let ascii = tempSArr[i].asciiValue
+            if ascii! >= 97 && ascii! <= 122 {
+                let upperAscii = ascii! - 32
+                let upperChar = Character(UnicodeScalar(upperAscii))
+                tempSArr[i] = upperChar
+                result.append(String(tempSArr))
+                backtracking(tempS: tempSArr, index: i+1)
+            } else if ascii! >= 65 && ascii! <= 90 {
+                let upperAscii = ascii! + 32
+                let upperChar = Character(UnicodeScalar(upperAscii))
+                tempSArr[i] = upperChar
+                result.append(String(tempSArr))
+                backtracking(tempS: tempSArr, index: i+1)
+            }
+        }
+        
+    }
+     return result
+}
