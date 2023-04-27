@@ -851,3 +851,36 @@ func letterCasePermutation(_ s: String) -> [String] {
     }
      return result
 }
+
+//842. Split Array into Fibonacci Sequence
+//Input: num = "1101111"
+//Output: [11,0,11,11]
+func splitIntoFibonacci(_ num: String) -> [Int] {
+    var result = [Int]()
+    backtracking(num: num, start: 0, f1: 0, f2: 0, result: &result)
+    return result
+}
+
+func backtracking(num: String, start: Int, f1: Int, f2: Int, result: inout [Int]) -> Bool {
+    if start == num.count { return result.count >= 3 }
+    
+    var sum = 0
+    for i in start..<num.count {
+        let digit = num[num.index(num.startIndex, offsetBy: i)].wholeNumberValue!
+        sum = sum * 10 + digit
+        if sum > Int32.max { break }
+        
+        if result.count >= 2 {
+            let f3 = f1 + f2
+            if sum < f3 { continue }
+            else if sum > f3 { break }
+        }
+        
+        result.append(sum)
+        if backtracking(num: num, start: i + 1, f1: f2, f2: sum, result: &result) { return true }
+        result.removeLast()
+        
+        if i == start && digit == 0 { break }
+    }
+    return false
+}
