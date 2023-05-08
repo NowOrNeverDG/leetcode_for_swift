@@ -1,21 +1,6 @@
 import UIKit
 import Foundation
-import Darwin//127，364
-
-//399. Evaluate Division
-//Input: equations = [["a","b"],["b","c"]], values = [2.0,3.0], queries = [["a","c"],["b","a"],["a","e"],["a","a"],["x","x"]]
-//Output: [6.00000,0.50000,-1.00000,1.00000,-1.00000]
-func calcEquation(_ equations: [[String]], _ values: [Double], _ queries: [[String]]) -> [Double] {
-    
-    var res = [Double]()
-    for i in 0..<queries.count {
-        for equation in equations {
-            if equation[0] == queries[i][0] && equation[1] == queries[i][1] {//一个公式搞定
-                res[i] = values[i]
-            } else if equation[0] == queries[i][0] && equation[1] == que
-        }
-    }
-}
+import Darwin
 
 
 //286. Walls and Gates

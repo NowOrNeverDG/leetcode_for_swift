@@ -335,3 +335,31 @@ func numberOfPatterns(_ m: Int, _ n: Int) -> Int {
     print(result)
     return result
 }
+
+//2658. Maximum Number of Fish in a Grid
+//Input: grid = [[0,2,1,0],[4,0,0,3],[1,0,0,4],[0,3,2,0]]
+//Output: 7
+func findMaxFish(_ grid: [[Int]]) -> Int {
+    let dirs = [[1,0],[-1,0],[0,1],[0,-1]]
+    let rows = grid.count
+    let columns  = grid[0].count
+    var result = Int.min
+    var visited = Array(repeating: Array(repeating: false, count: columns), count: rows)
+    for i in 0..<rows {
+        for j in 0..<columns {
+            result = max(result, dfs(grid:grid, r: i, c: j, visited: &visited))
+        }
+    }
+    
+    func dfs(grid:[[Int]], r:Int, c:Int, visited: inout [[Bool]]) -> Int {
+        if r >= rows || r < 0 || c >= columns || c < 0 || grid[r][c] == 0 || visited[r][c] == true { return 0 }
+        visited[r][c] = true
+        var total = grid[r][c]
+        for dir in dirs {
+            total += dfs(grid: grid, r: r+dir[0], c: c+dir[1],visited: &visited)
+        }
+        return total
+    }
+    return result
+}
+
