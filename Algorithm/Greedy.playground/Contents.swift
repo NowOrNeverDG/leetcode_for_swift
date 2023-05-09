@@ -222,3 +222,15 @@ func findContentChildren(_ g: [Int], _ s: [Int]) -> Int {
     }
     return contendChildren
 }
+
+
+//55. Jump Game
+//Input: nums = [2,3,1,1,4]
+//Output: true
+func canJump(_ nums: [Int]) -> Bool {
+    var lastPos = nums.count - 1
+    for i in (0..<nums.count).reversed() {
+        if (i + nums[i] >= lastPos) {lastPos = i}
+    }
+    return lastPos == 0
+}

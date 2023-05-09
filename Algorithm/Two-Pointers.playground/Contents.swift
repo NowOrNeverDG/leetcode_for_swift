@@ -747,3 +747,29 @@ func numSubarrayProductLessThanK(_ nums: [Int], _ k: Int) -> Int {
 }
 
 
+//82. Remove Duplicates from Sorted List II
+//Input: head = [1,2,3,3,4,4,5]
+//Output: [1,2,5]
+func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+    var head = head
+    var current = head
+    var previous: ListNode? = nil
+    while current != nil {
+        if current?.val == current?.next?.val {
+            let val = current?.val
+            let refPointer = current
+            while (current?.val == val) {
+                current = current?.next
+            }
+            if (refPointer === head) {
+                head = current
+            } else {
+                previous?.next = current
+            }
+        } else {
+            previous = current
+            current = current?.next
+        }
+    }
+    return head
+}
