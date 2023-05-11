@@ -234,3 +234,22 @@ func canJump(_ nums: [Int]) -> Bool {
     }
     return lastPos == 0
 }
+
+//45. Jump Game II
+//Input: nums = [2,3,1,1,4]
+//Output: 2
+func jump(_ nums: [Int]) -> Int {
+    var n = nums.count
+    var result = 0
+    var curEnd = 0
+    var curFar = 0
+    for i in 0..<n {
+        curFar = max(curFar, i+nums[i])
+        
+        if (i == curEnd) {
+            result += 1
+            curEnd = curFar
+        }
+    }
+    return result
+}
