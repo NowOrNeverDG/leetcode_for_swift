@@ -253,3 +253,26 @@ func jump(_ nums: [Int]) -> Int {
     }
     return result
 }
+
+
+//134. Gas Station
+//Input: gas = [1,2,3,4,5], cost = [3,4,5,1,2]
+//Output: 3
+func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
+    var totalTank = 0
+    var currTank = 0
+    let n = gas.count
+    var startingIndex = 0
+    for i in 0..<n {
+        totalTank += gas[i] - cost[i]
+        currTank += gas[i] - cost[i]
+        
+        if currTank < 0 {
+            startingIndex = i + 1
+            currTank = 0
+        }
+    }
+    return totalTank >= 0 ? startingIndex : -1
+}
+
+
