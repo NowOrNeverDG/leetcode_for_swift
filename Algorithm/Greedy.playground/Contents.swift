@@ -275,4 +275,49 @@ func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
     return totalTank >= 0 ? startingIndex : -1
 }
 
+//135. Candy
+//Input: ratings = [1,0,2]
+//Output: 5
+func candy(_ ratings: [Int]) -> Int {
+    let n = ratings.count
+    var result = Array(repeating: 1, count: n)
+    for i in 1..<n {
+        if ratings[i-1] < ratings[i] {
+            result[i] = result[i-1] + 1
+        } else {
+            result[i] = 1
+        }
+    }
+    print(result)
+    for i in (0..<n-1).reversed() {
+        if ratings[i] > ratings[i+1] {
+            result[i] = max(result[i], result[i+1]+1)
+        }
+    }
+    
+    var res = 0
+    for i in 0..<n {
+        res += result[i]
+    }
+    print(result)
+    return res
+}
 
+//45. Jump Game II
+//Input: nums = [2,3,1,1,4]
+//Output: 2
+func jump(_ nums: [Int]) -> Int {
+    var n = nums.count
+    var result = 0
+    var curEnd = 0
+    var curFar = 0
+    for i in 0..<n-1 {
+        curFar = max(curFar, i+nums[i])
+        
+        if (i == curEnd) {
+            result += 1
+            curEnd = curFar
+        }
+    }
+    return result
+}
