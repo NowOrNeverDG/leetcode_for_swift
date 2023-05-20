@@ -321,3 +321,31 @@ func jump(_ nums: [Int]) -> Int {
     }
     return result
 }
+
+//12. Integer to Roman
+//Input: num = 3
+//Output: "III"
+func intToRoman(_ num: Int) -> String {
+        let no = [1,    4,  5,   9, 10, 40, 50, 90,100,400,500,900,1000]
+        let ch = ["I","IV","V","IX","X","XL","L" ,"XC","C","CD","D","CM","M"]
+        var num = num
+        var result = ""
+        for i in (0..<no.count).reversed() {
+            if num >= no[i] {
+                let mutiplier = num / no[i]
+                num = num - mutiplier*no[i]
+                print(num)
+                result += addOnTail(mutiplier: mutiplier, ch: ch[i])
+                print(result)
+            }
+        }
+        return result
+    }
+    
+    func addOnTail(mutiplier:Int,ch:String) -> String {
+        var output = ""
+        for _ in 0..<mutiplier {
+            output += ch
+        }
+        return output
+    }
