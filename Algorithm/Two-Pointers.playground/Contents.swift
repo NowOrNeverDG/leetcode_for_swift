@@ -773,3 +773,54 @@ func deleteDuplicates(_ head: ListNode?) -> ListNode? {
     }
     return head
 }
+
+//125. Valid Palindrome
+//Input: s = "A man, a plan, a canal: Panama"
+//Output: true
+func isPalindrome(_ s: String) -> Bool {
+    let sArr = Array(s)
+    var testArr = [String]()
+    for ch in sArr {
+        guard let asciiVal = ch.asciiValue else { return false }
+        if ch.isLetter{
+            let ch = ch.lowercased()
+            testArr.append(String(ch))
+        } else if ch.isNumber {
+            testArr.append(String(ch))
+        }
+    }
+    var head = 0
+    var tail = testArr.count-1
+    while (head < tail) {
+        if testArr[head] != testArr[tail] { return false }
+        head += 1
+        tail -= 1
+    }
+    
+    return true
+}
+
+//3. Longest Substring Without Repeating Characters
+//Input: s = "abcabcbb"
+//Output: 3
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    if s.count == 0 { return 0 }
+    var sArr = Array(s)
+    let n = sArr.count
+    var head = 0
+    var tail = 0
+    var tempDic = [String:Int]()
+    var length = 0
+    while(tail < n) {
+        tempDic[String(sArr[tail]),default: 0] += 1
+        if tempDic[String(sArr[tail])]! > 1 {
+            while (tempDic[String(sArr[tail])]! > 1){
+                tempDic[String(sArr[head])]! -= 1
+                head += 1
+            }
+        }
+        length = max(length, tail-head)
+        tail += 1
+    }
+    return length+1
+}
