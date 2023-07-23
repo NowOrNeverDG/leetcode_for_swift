@@ -194,3 +194,28 @@ func shortestPathBinaryMatrixDFS(_ grid: [[Int]]) -> Int {
 }
 
 
+//314. Binary Tree Vertical Order Traversal
+//Input: root = [3,9,20,null,null,15,7]
+//Output: [[9],[3,15],[20],[7]]
+func verticalOrder(_ root: TreeNode?) -> [[Int]] {
+    guard let root = root else { return [] }
+    var columnTable = [Int:[Int]]()
+    columnTable[0,default: []].append(root.val)
+    var queue:[(Int,TreeNode)] = [(0,root)]
+
+    while(!queue.isEmpty) {
+        let queueSize = queue.count
+        for _ in 0..<queueSize {
+            let pair = queue.removeFirst()
+            if let left = pair.1.left {
+                queue.append((pair.0-1,left))
+                columnTable[pair.0-1,default: []].append(left.val)
+            }
+            if let right = pair.1.right {
+                queue.append((pair.0+1,right))
+                columnTable[pair.0+1,default: []].append(right.val)
+            }
+        }
+    }
+    return columnTable.sorted{ $0.key < $1.key}.map{ $0.value }
+}
