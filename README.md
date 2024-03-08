@@ -1,6 +1,6 @@
 Leetcode For Swift<br>
 -
-Leetcode For Swift focuse on providing solution to Leetcode Question.<br>
+Leetcode For Swift focuses on providing solution to Leetcode Question.<br>
 
 Usage<br>
 -
