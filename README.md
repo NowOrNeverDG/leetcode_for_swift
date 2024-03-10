@@ -7,8 +7,6 @@ Usage<br>
 1. Search ID number to access to solution.<br>
 2. Look up solution by category.<br>
 
-Binary Tree
--
 | ID  | Title | Difficulty | Tag | 
 | - | - | - | - |
 | 0094 | [Binary Tree Inorder Traversal]() | Easy | dfs inorder |
@@ -17,7 +15,7 @@ Binary Tree
 | 0098 | [Validate Binary Search Tree]() | Medium | bst dfs preorder |
 | 0100 | [Same Tree]() | Easy | dfs preorder |
 | 0102 | [Binary Tree Level Order Traversal]() | Medium | dfs/bfs preorder | 
-| 0103 | [Binary Tree Zigzag Level Order Traversal] | Medium | bfs |
+| 0103 | [Binary Tree Zigzag Level Order Traversal]() | Medium | bfs |
 | 0104 | [Maximum Depth of Binary Tree]() | Easy | dfs/bfs preorder/postorder |
 | 0105 | [Construct Binary Tree from Preorder and Inorder Traversal]() | Medium | dfs construct_tree preorder |
 | 0106 | [Construct Binary Tree from Inorder and Postorder Traversal]() | Medium | dfs construct_tree preorder |
@@ -38,12 +36,14 @@ Binary Tree
 | 0226 | [Invert Binary Tree ]() | Easy | dfs preorder/postorder |
 | 0230 | [Kth Smallest Element in a BST]() | Medium | bst dfs inorder |
 | 0257 | [Binary Tree Paths]() | Easy | dfs preorder |
-| 0297 | [Serialize and Deserialize Binary Tree] | Hard | dfs preorder |
-| 0298 | [Binary Tree Longest Consecutive Sequence] | Medium | dfs preorder |
+| 0270 | [Closest Binary Search Tree Value]() | Easy | bst dfs preorder |
+| 0297 | [Serialize and Deserialize Binary Tree]() | Hard | dfs preorder |
+| 0298 | [Binary Tree Longest Consecutive Sequence]() | Medium | dfs preorder |
+| 0404 | [Sum of Left Leaves]() | Easy | dfs preorder |
 | 0450 | [Delete Node in a BST]() | Medium | bst dfs trim_tree preorder |
-| 0513 | [Find Bottom Left Tree Value] | Medium | bfs |
+| 0513 | [Find Bottom Left Tree Value]() | Medium | bfs |
 | 0515 | [Find Largest Value in Each Tree Row]() | Medium | bfs/dfs preorder |
-| 0538 | [Convert BST to Greater Tree] | Medium | bst dfs inorder |
+| 0538 | [Convert BST to Greater Tree]() | Medium | bst dfs inorder |
 | 0543 | [Diameter of Binary Tree]() | Easy | dfs postorder |
 | 0572 | [Subtree of Another Tree]() | Easy | dfs preorder |
 | 0589 | [N-ary Tree Preorder Traversal]() | Easy | dfs n-ary_tree preporder | 
@@ -51,7 +51,7 @@ Binary Tree
 | 0637 | [Average of Levels in Binary Tree]() | Easy | bfs |
 | 0652 | [Find Duplicate Subtrees]() | Medium | dfs postorder |
 | 0654 | [Maximum Binary Tree]() | Medium | dfs construct_tree preorder |
-| 0669 | [Trim a Binary Search Tree] | Medium | bst dfs trim_tree postorder |
+| 0669 | [Trim a Binary Search Tree]() | Medium | bst dfs trim_tree postorder |
 | 0700 | [Search in a Binary Search Tree]() | Easy | bst dfs preorder |
 | 0701 | [Insert into a Binary Search Tree]() | Medium | bst dfs preorder |
 | 0889 | [Construct Binary Tree from Preorder and Postorder Traversal]() | Medium | dfs construct_tree preorder |
@@ -66,34 +66,14 @@ Binary Tree
 | 1367 | [Linked List in Binary Tree]() | Medium | dfs linked_list preorder |
 | 1457 | [Pseudo-Palindromic Paths in a Binary Tree]() | Medium | dfs preorder |
 
-Array
--
-| ID  | Title | Difficulty | Tag | 
-| - | - | - | - |
-
-Math
--
-| ID  | Title | Difficulty | Tag | 
-| - | - | - | - |
-
-
-
 Waitlist:
 -
 Queue, Stack
-
 Graph
-
 Array, LinkList
-
 Hashmap
-
 Double Pointer
-
 Dynamic Programming
-
 Math
-
 Greedy
-
 Search
