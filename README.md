@@ -48,6 +48,7 @@ Usage<br>
 | 0572 | [Subtree of Another Tree]() | Easy | dfs preorder |
 | 0589 | [N-ary Tree Preorder Traversal]() | Easy | dfs n-ary_tree preporder | 
 | 0617 | [Merge Two Binary Trees]() | Easy | dfs construct_tree preorder |
+| 0623 | [Add One Row to Tree]() | Medium | dfs construct_tree preorder |
 | 0637 | [Average of Levels in Binary Tree]() | Easy | bfs |
 | 0652 | [Find Duplicate Subtrees]() | Medium | dfs postorder |
 | 0654 | [Maximum Binary Tree]() | Medium | dfs construct_tree preorder |
@@ -65,6 +66,20 @@ Usage<br>
 | 1325 | [Delete Leaves With a Given Value]() | Medium | dfs trim_tree postorder | 
 | 1367 | [Linked List in Binary Tree]() | Medium | dfs linked_list preorder |
 | 1457 | [Pseudo-Palindromic Paths in a Binary Tree]() | Medium | dfs preorder |
+| 3069 | [Distribute Elements Into Two Arrays I]() | Easy | array |
+| 3070 | [Count Submatrices with Top-Left Element and Sum Less Than k]() | Medium | matrix dp |
+| 3071 | [Minimum Operations to Write the Letter Y on a Grid]() | Medium | matrix brute_force |
+| 3072 | [Distribute Elements Into Two Arrays II]() | Hard | array binary search |
+| 3074 | [Apple Redistribution into Boxes]() | Easy | array sort |
+| 3075 | [Maximize Happiness of Selected Children]() | Medium | array sort greedy |
+| 3076 | [Shortest Uncommon Substring in an Array]() | Medium | array brute force |
+| 3083 | [Existence of a Substring in a String and Its Reverse]() | Easy | hashmap |
+| 3084 | [Count Substrings Starting and Ending with Given Character]() | Medium | string math |
+| 3085 | [Minimum Deletions to Make String K-Special]() | Medium | hashmap brute_force |
+
+
+
+
 
 Waitlist:
 -
