@@ -66,6 +66,7 @@ Usage<br>
 | 1325 | [Delete Leaves With a Given Value]() | Medium | dfs trim_tree postorder | 
 | 1367 | [Linked List in Binary Tree]() | Medium | dfs linked_list preorder |
 | 1457 | [Pseudo-Palindromic Paths in a Binary Tree]() | Medium | dfs preorder |
+| 1979 | [Find Greatest Common Divisor of Array]() | Easy | math |
 | 3069 | [Distribute Elements Into Two Arrays I]() | Easy | array |
 | 3070 | [Count Submatrices with Top-Left Element and Sum Less Than k]() | Medium | matrix dp |
 | 3071 | [Minimum Operations to Write the Letter Y on a Grid]() | Medium | matrix brute_force |
