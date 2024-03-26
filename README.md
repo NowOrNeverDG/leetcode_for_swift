@@ -56,16 +56,23 @@ Usage<br>
 | 0700 | [Search in a Binary Search Tree]() | Easy | bst dfs preorder |
 | 0701 | [Insert into a Binary Search Tree]() | Medium | bst dfs preorder |
 | 0889 | [Construct Binary Tree from Preorder and Postorder Traversal]() | Medium | dfs construct_tree preorder |
-| 0938 | [Range Sum of BST]() | Easy | bst dfs postorder |
+| 0938 | [Range Sum of BST]() | Easy | bst dfs postorder | Medium | dfs |
+| 0971 | [Flip Binary Tree To Match Preorder Traversal]() | Medium | dfs preorder |
+| 0987 | [Vertical Order Traversal of a Binary Tree]() | Hard | dfs preorder |
 | 0988 | [Smallest String Starting From Leaf]() | Medium | dfs preorder |
+| 0993 | [Cousins in Binary Tree]() | Easy | dfs preorder |
 | 1008 | [Construct Binary Search Tree from Preorder Traversal]() | Medium | dfs construct_tree preorder |
 | 1022 | [Sum of Root To Leaf Binary Numbers]() | Easy | dfs preorder |
 | 1038 | [Binary Search Tree to Greater Sum Tree]() | Medium | bst dfs inorder |
 | 1161 | [Maximum Level Sum of a Binary Tree]() | Medium | bfs |
 | 1302 | [Deepest Leaves Sum]() | Medium | bfs |
+| 1315 | [Sum of Nodes with Even-Valued Grandparent]() | Medium | dfs preorder |
 | 1325 | [Delete Leaves With a Given Value]() | Medium | dfs trim_tree postorder | 
 | 1367 | [Linked List in Binary Tree]() | Medium | dfs linked_list preorder |
+| 1448 | [Count Good Nodes in Binary Tree]() | Medium | dfs preorder |
 | 1457 | [Pseudo-Palindromic Paths in a Binary Tree]() | Medium | dfs preorder |
+| 1469 | [Find All The Lonely Nodes]() | Easy | dfs preorder |
+| 1602 | [Find Nearest Right Node in Binary Tree]() | Medium | dfs preorder bfs |
 | 1979 | [Find Greatest Common Divisor of Array]() | Easy | math |
 | 3069 | [Distribute Elements Into Two Arrays I]() | Easy | array |
 | 3070 | [Count Submatrices with Top-Left Element and Sum Less Than k]() | Medium | matrix dp |
