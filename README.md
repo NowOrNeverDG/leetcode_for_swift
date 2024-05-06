@@ -4,11 +4,15 @@ Leetcode For Swift focuses on providing solution to Leetcode Question.<br>
 
 Usage<br>
 -
-1. Search ID number to access to solution.<br>
-2. Look up solution by category.<br>
+1. Search ID number to access to the solution.<br>
+2. Look up the solution by category.<br>
 
 | ID  | Title | Difficulty | Tag | 
 | - | - | - | - |
+| 0005 | [Longest Palindromic Substring]() | Medium | double-pointer |
+| 0026 | [Remove Duplicates from Sorted Array]() | Easy | double-pointer |
+| 0027 | [Remove Element]() | Easy | double-pointer |
+| 0088 | [Merge Sorted Array]() | Easy | double-pointer |
 | 0094 | [Binary Tree Inorder Traversal]() | Easy | dfs inorder |
 | 0095 | [Unique Binary Search Trees II]() | Medium | bst construct_bst |
 | 0096 | [Unique Binary Search Trees]() | Medium | bst construct_bst | 
@@ -29,6 +33,8 @@ Usage<br>
 | 0129 | [Sum Root to Leaf Numbers]() | Medium | dfs preorder |
 | 0144 | [Binary Tree Preorder Traversal]() | Easy | dfs preorder |
 | 0145 | [Binary Tree Postorder Traversal]() | Easy | dfs postorder |
+| 0151 | [Reverse Words in a String]() | Medium | double-pointer |
+| 0167 | [Remove Duplicates from Sorted Array]() | Easy | double-pointer |
 | 0173 | [Binary Search Tree Iterator]() | Medium | dfs inorder system_design | 
 | 0199 | [Binary Tree Right Side View]() | Medium | bfs |
 | 0200 | [Number of Islands]() | Medium | bfs dfs matrix |
@@ -37,8 +43,11 @@ Usage<br>
 | 0230 | [Kth Smallest Element in a BST]() | Medium | bst dfs inorder |
 | 0257 | [Binary Tree Paths]() | Easy | dfs preorder |
 | 0270 | [Closest Binary Search Tree Value]() | Easy | bst dfs preorder |
+| 0283 | [Move Zeroes]() | Easy | double-pointer |
 | 0297 | [Serialize and Deserialize Binary Tree]() | Hard | dfs preorder |
 | 0298 | [Binary Tree Longest Consecutive Sequence]() | Medium | dfs preorder |
+| 0344 | [Reverse String]() | Easy | double-pointer |
+| 0360 | [Sort Transformed Array]() | Medium | double-pointer |
 | 0404 | [Sum of Left Leaves]() | Easy | dfs preorder |
 | 0450 | [Delete Node in a BST]() | Medium | bst dfs trim_tree preorder |
 | 0513 | [Find Bottom Left Tree Value]() | Medium | bfs |
@@ -58,6 +67,7 @@ Usage<br>
 | 0889 | [Construct Binary Tree from Preorder and Postorder Traversal]() | Medium | dfs construct_tree preorder |
 | 0938 | [Range Sum of BST]() | Easy | bst dfs postorder | Medium | dfs |
 | 0971 | [Flip Binary Tree To Match Preorder Traversal]() | Medium | dfs preorder |
+| 0977 | [Squares of a Sorted Array]() | Easy | double-pointer |
 | 0987 | [Vertical Order Traversal of a Binary Tree]() | Hard | dfs preorder |
 | 0988 | [Smallest String Starting From Leaf]() | Medium | dfs preorder |
 | 0993 | [Cousins in Binary Tree]() | Easy | dfs preorder |
