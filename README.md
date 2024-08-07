@@ -9,7 +9,9 @@ Usage<br>
 
 | ID  | Title | Difficulty | Tag | 
 | - | - | - | - |
+| 0001 | [Two Sum]() | Eazy | double-pointer |
 | 0005 | [Longest Palindromic Substring]() | Medium | double-pointer |
+| 0018 | [4Sum]() | Medium | double-pointer |
 | 0026 | [Remove Duplicates from Sorted Array]() | Easy | double-pointer |
 | 0027 | [Remove Element]() | Easy | double-pointer |
 | 0088 | [Merge Sorted Array]() | Easy | double-pointer |
@@ -34,7 +36,7 @@ Usage<br>
 | 0144 | [Binary Tree Preorder Traversal]() | Easy | dfs preorder |
 | 0145 | [Binary Tree Postorder Traversal]() | Easy | dfs postorder |
 | 0151 | [Reverse Words in a String]() | Medium | double-pointer |
-| 0167 | [Remove Duplicates from Sorted Array]() | Easy | double-pointer |
+| 0167 | [Two Sum II - Input Array Is Sorted]() | Medium | double-pointer |
 | 0173 | [Binary Search Tree Iterator]() | Medium | dfs inorder system_design | 
 | 0199 | [Binary Tree Right Side View]() | Medium | bfs |
 | 0200 | [Number of Islands]() | Medium | bfs dfs matrix |
@@ -46,12 +48,15 @@ Usage<br>
 | 0283 | [Move Zeroes]() | Easy | double-pointer |
 | 0297 | [Serialize and Deserialize Binary Tree]() | Hard | dfs preorder |
 | 0298 | [Binary Tree Longest Consecutive Sequence]() | Medium | dfs preorder |
+| 0303 | [Range Sum Query - Immutable]() | Medium | dp |
+| 0304 | [Range Sum Query 2D - Immutable]() | Medium | dp |
 | 0344 | [Reverse String]() | Easy | double-pointer |
 | 0360 | [Sort Transformed Array]() | Medium | double-pointer |
 | 0404 | [Sum of Left Leaves]() | Easy | dfs preorder |
 | 0450 | [Delete Node in a BST]() | Medium | bst dfs trim_tree preorder |
 | 0513 | [Find Bottom Left Tree Value]() | Medium | bfs |
 | 0515 | [Find Largest Value in Each Tree Row]() | Medium | bfs/dfs preorder |
+| 0520 | [Detect Capital]() | Easy | string ｜
 | 0538 | [Convert BST to Greater Tree]() | Medium | bst dfs inorder |
 | 0543 | [Diameter of Binary Tree]() | Easy | dfs postorder |
 | 0572 | [Subtree of Another Tree]() | Easy | dfs preorder |
@@ -76,6 +81,7 @@ Usage<br>
 | 1038 | [Binary Search Tree to Greater Sum Tree]() | Medium | bst dfs inorder |
 | 1161 | [Maximum Level Sum of a Binary Tree]() | Medium | bfs |
 | 1302 | [Deepest Leaves Sum]() | Medium | bfs |
+| 1314 | [Matrix Block Sum]() | Medium | dp |
 | 1315 | [Sum of Nodes with Even-Valued Grandparent]() | Medium | dfs preorder |
 | 1325 | [Delete Leaves With a Given Value]() | Medium | dfs trim_tree postorder | 
 | 1367 | [Linked List in Binary Tree]() | Medium | dfs linked_list preorder |
@@ -84,6 +90,7 @@ Usage<br>
 | 1469 | [Find All The Lonely Nodes]() | Easy | dfs preorder |
 | 1602 | [Find Nearest Right Node in Binary Tree]() | Medium | dfs preorder bfs |
 | 1979 | [Find Greatest Common Divisor of Array]() | Easy | math |
+| 2710 | [Remove Trailing Zeros From a String]() | Easy | string |
 | 3069 | [Distribute Elements Into Two Arrays I]() | Easy | array |
 | 3070 | [Count Submatrices with Top-Left Element and Sum Less Than k]() | Medium | matrix dp |
 | 3071 | [Minimum Operations to Write the Letter Y on a Grid]() | Medium | matrix brute_force |
