@@ -103,9 +103,6 @@ Usage<br>
 | 3085 | [Minimum Deletions to Make String K-Special]() | Medium | hashmap brute_force |
 
 
-
-
-
 Waitlist:
 -
 Queue, Stack
