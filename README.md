@@ -69,6 +69,7 @@ Usage<br>
 | 0669 | [Trim a Binary Search Tree]() | Medium | bst dfs trim_tree postorder |
 | 0700 | [Search in a Binary Search Tree]() | Easy | bst dfs preorder |
 | 0701 | [Insert into a Binary Search Tree]() | Medium | bst dfs preorder |
+| 0724 | [Find Pivot Index]() | Easy | dp |
 | 0889 | [Construct Binary Tree from Preorder and Postorder Traversal]() | Medium | dfs construct_tree preorder |
 | 0938 | [Range Sum of BST]() | Easy | bst dfs postorder | Medium | dfs |
 | 0971 | [Flip Binary Tree To Match Preorder Traversal]() | Medium | dfs preorder |
