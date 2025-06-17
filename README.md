@@ -14,6 +14,8 @@ Usage<br>
 | 0018 | [4Sum]() | Medium | double-pointer |
 | 0026 | [Remove Duplicates from Sorted Array]() | Easy | double-pointer |
 | 0027 | [Remove Element]() | Easy | double-pointer |
+| 0050 | [Pow(x, n)]() | Easy | Binary Exponentiation |
+| 0069 | [Sqrt(x)]() | Easy | binary search |
 | 0088 | [Merge Sorted Array]() | Easy | double-pointer |
 | 0094 | [Binary Tree Inorder Traversal]() | Easy | dfs inorder |
 | 0095 | [Unique Binary Search Trees II]() | Medium | bst construct_bst |
