@@ -104,6 +104,7 @@ Usage<br>
 | 3083 | [Existence of a Substring in a String and Its Reverse]() | Easy | hashmap |
 | 3084 | [Count Substrings Starting and Ending with Given Character]() | Medium | string math |
 | 3085 | [Minimum Deletions to Make String K-Special]() | Medium | hashmap brute_force |
+| 3335 | [Total Characters in String After Transformations I]() | Medium | dp binary_exponentiation |
 
 
 Waitlist:
